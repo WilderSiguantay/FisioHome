@@ -8,32 +8,14 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'bienvenida',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
-  {
-    path: 'bienvenida',
-    loadChildren: () => import('./bienvenida/bienvenida.module').then( m => m.BienvenidaPageModule)
-  },
-  {
-    path: 'register',
-    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
-  },  {
-    path: 'inicial',
-    loadChildren: () => import('./inicial/inicial.module').then( m => m.InicialPageModule)
-  },
-
-
-
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
 })
