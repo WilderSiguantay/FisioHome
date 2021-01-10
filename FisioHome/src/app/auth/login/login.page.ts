@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from  "@angular/router";
-//import { AuthService } from '../';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +8,16 @@ import { Router } from  "@angular/router";
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  //constructor(private  authService:  AuthService, private  router:  Router)
-  constructor() { }
+
+  constructor(private  authService:  AuthService, private  router:  Router) { }
 
   ngOnInit() {
+  }
+
+  login(form){
+    this.authService.login(form.value).subscribe((res)=>{
+      this.router.navigateByUrl('home');
+    });
   }
 
 }
