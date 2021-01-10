@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
+  },  {
+    path: 'inicial',
+    loadChildren: () => import('./inicial/inicial.module').then( m => m.InicialPageModule)
   },
+
 
 
 ];
