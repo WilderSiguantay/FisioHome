@@ -1,20 +1,27 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      FisioHome
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="ion-padding">
+  <div class="center" class="imagen">
+    <img class="icon" src="assets/home.jpg" alt="">
+  </div>
+ 
+  <div>
+    <h2 class="center-span">Fisio Home</h2>
+  </div>
+
+  <div>
+    <p class="center-span">Maximiza tu potencial, <br> con el tratamiento <br> adecuado al alcance de <br> un clic</p>
+  </div>
+
+  <div>
+    <ion-button class="boton-position" routerLink="/login" color="medium" expand="block">Iniciar</ion-button>
   </div>
 </ion-content>
+

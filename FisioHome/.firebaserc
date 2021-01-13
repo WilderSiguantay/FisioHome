@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "fisioapp-401eb": {
+      "hosting": {
+        "app": [
+          "fisioapp-401eb"
+        ]
+      }
+    }
+  }
+}

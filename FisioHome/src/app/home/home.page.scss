@@ -25,3 +25,28 @@
 #container a {
   text-decoration: none;
 }
+
+.center-span{
+  display:block;
+  text-align: center;
+}
+
+.center {
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+
+
+.imagen{
+  margin-top: 15%;
+}
+.boton-position{
+  
+  position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin:20px;
+
+}
