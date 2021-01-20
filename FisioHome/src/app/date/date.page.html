@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/admin" >
+        <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Crear Cita</ion-title>
+   
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+<div class="div-margenes">
+  <form >
+    <ion-item lines="full">
+      <ion-label position="floating">Introduce nueva direccion</ion-label>
+      <ion-input type="text" #direccion required></ion-input>
+    </ion-item>
+   
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="light" (click)="guardarDireccion(direccion)" expand="block" >Guardar direccion</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</div>
+
+
+<div class="div-programar">
+  <h4>¿Cuándo?</h4>
+ 
+        <ion-list>
+          <ion-item>
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            <ion-label>Lo antes posible</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label>Programar cita para después</ion-label>
+          </ion-item>
+         
+        </ion-list>
+
+</div>
+
+
+<div>
+  <ion-button class="boton-position"  color="medium" expand="block">Guardar</ion-button>
+</div>
+</ion-content>

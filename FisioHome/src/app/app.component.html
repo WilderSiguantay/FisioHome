@@ -1,3 +1,34 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="start" menuId="main-menu" content-id="main" class="my-custom-menu">
+    <ion-header>
+      <ion-toolbar color="tertiary">
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>Mis Citas</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="people-outline"></ion-icon>
+          <ion-label>Contacto</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="notifications-outline"></ion-icon>
+          <ion-label>Notificaciones</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="exit-outline"></ion-icon>
+          <ion-label>Cerrar Sesión</ion-label>
+        </ion-item>
+      
+     
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>
+

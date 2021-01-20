@@ -1,0 +1,76 @@
+<ion-header>
+  
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- fab placed to the top start -->
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button routerLink="/home">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="center">
+    <img class="icon" src="assets/icon/fisiocam.png" alt="">
+  </div>
+  
+  
+<form autocomplete="off">
+  <ion-item lines="full">
+    <ion-label position="floating">Email</ion-label>
+    <ion-input type="text" #email required></ion-input>
+  </ion-item>
+  <ion-item lines="full">
+    <ion-label position="floating">Password</ion-label>
+    <ion-input type="password" #password required></ion-input>
+  </ion-item>
+  <ion-row>
+    <ion-col>
+      <ion-button type="submit" color="light" (click)="onLogin(email, password)" expand="block" >Login</ion-button>
+      
+    </ion-col>
+  </ion-row>
+  
+<ion-row>
+  <ion-col>
+    <div class="ion-text-center ion-margin-top">
+      <a routerLink="/forgot-password"><small>Olvidé mi Contraseña</small></a>
+    </div>
+    
+  </ion-col>
+</ion-row>
+  <ion-reorder slot="end"></ion-reorder>
+  <span class="center-span" >or</span>
+  <ion-row>
+    <ion-col>
+   
+
+      <ion-button icon-start class="google" type="submit" expand="block" (click)="onLoginGoogle()" expand="block" >
+        <ion-icon name="logo-google"></ion-icon> 
+      </ion-button>
+        
+    </ion-col>
+  </ion-row>
+  <ion-row>
+  <ion-col >
+      
+      <ion-button type="submit" expand="block" class="facebook" (click)="onLoginFacebook()" expand="block" >
+        <ion-icon name="logo-facebook"></ion-icon> </ion-button>
+      </ion-col>
+  </ion-row>
+ 
+</form>
+
+<ion-row>
+  <ion-col>
+    <div class="ion-text-center ion-margin-top">
+      <a routerLink="/register"><small>Crear nueva cuenta</small></a>
+    </div>
+    
+  </ion-col>
+</ion-row>
+</ion-content>
