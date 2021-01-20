@@ -1,0 +1,35 @@
+[33m09eb629[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m)[m HEAD@{0}: pull --progress origin: Merge made by the 'recursive' strategy.
+[33mb6166b4[m HEAD@{1}: commit: MAPAS2
+[33mceda156[m HEAD@{2}: reset: moving to ceda156
+[33mdf97225[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mC8[m[33m)[m HEAD@{3}: checkout: moving from C8 to develop
+[33mdf97225[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mC8[m[33m)[m HEAD@{4}: checkout: moving from develop to C8
+[33mdf97225[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mC8[m[33m)[m HEAD@{5}: commit: maps
+[33mcea7bcf[m HEAD@{6}: reset: moving to HEAD~1
+[33mceda156[m HEAD@{7}: reset: moving to HEAD~1
+[33m174647d[m HEAD@{8}: reset: moving to HEAD~1
+[33mafbccf9[m HEAD@{9}: reset: moving to HEAD~1
+[33m165261e[m HEAD@{10}: reset: moving to HEAD~1
+[33m1fdf5e8[m HEAD@{11}: revert: Revert "Revert "eliminar errores""
+[33m165261e[m HEAD@{12}: revert: Revert "eliminar errores"
+[33mafbccf9[m HEAD@{13}: revert: Revert "mapas"
+[33m174647d[m HEAD@{14}: commit: eliminar errores
+[33mceda156[m HEAD@{15}: commit: mapas
+[33mcea7bcf[m HEAD@{16}: commit: login, menus, registro entre otros
+[33m75a3d1d[m HEAD@{17}: commit: hola
+[33m17b306e[m HEAD@{18}: commit: actualizacion
+[33m4f33233[m HEAD@{19}: commit: actualizacion angular
+[33mf738f15[m HEAD@{20}: commit: actualizacion login
+[33m71adbd9[m HEAD@{21}: reset: moving to HEAD
+[33m71adbd9[m HEAD@{22}: commit: Autenticacion
+[33me911bc4[m HEAD@{23}: commit: Version IONIC
+[33m002ae96[m HEAD@{24}: pull --progress origin: Fast-forward
+[33md2641b9[m HEAD@{25}: checkout: moving from main to develop
+[33m25dd668[m HEAD@{26}: checkout: moving from develop to main
+[33md2641b9[m HEAD@{27}: checkout: moving from main to develop
+[33m25dd668[m HEAD@{28}: commit: Pagina inicial
+[33md2641b9[m HEAD@{29}: checkout: moving from develop to main
+[33md2641b9[m HEAD@{30}: checkout: moving from main to develop
+[33md2641b9[m HEAD@{31}: checkout: moving from develop to main
+[33md2641b9[m HEAD@{32}: checkout: moving from main to develop
+[33md2641b9[m HEAD@{33}: reset: moving to HEAD
+[33md2641b9[m HEAD@{34}: clone: from https://github.com/WilderSiguantay/FisioHome.git
