@@ -37,6 +37,11 @@ const routes: Routes = [
     path: 'login-movil',
     loadChildren: () => import('./login-movil/login-movil.module').then( m => m.LoginMovilPageModule)
   },
+  {
+    path: 'date',
+    loadChildren: () => import('./date/date.module').then( m => m.DatePageModule)
+  },
+  
 ];
 
 @NgModule({

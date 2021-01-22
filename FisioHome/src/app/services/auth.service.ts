@@ -123,6 +123,14 @@ export class AuthService {
     return userRef.set(data,{merge:true});
   }
 
+  async getUid(){
+    const user = await this.afAuth.currentUser;
+    if (user === undefined){
+      return null;
+    }else{
+      return user.uid;
+    }
+  }
  
   
 }

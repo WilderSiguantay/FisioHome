@@ -1,18 +1,23 @@
+
 <ion-header>
-  
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home" >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Login</ion-title>
-    
+    <ion-buttons slot="end">
+      <ion-button routerLink="/">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content class="ion-padding">
-  <!-- fab placed to the top start -->
-  <ion-fab vertical="top" horizontal="start" slot="fixed">
-    <ion-fab-button routerLink="/home">
-      <ion-icon name="arrow-back-circle"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+
 
   <div class="center">
     <img class="icon" src="assets/icon/fisiocam.png" alt="">
@@ -32,6 +37,7 @@
     <ion-col>
       <ion-button type="submit" color="light" (click)="onLogin(email, password)" expand="block" >Login</ion-button>
       
+      
     </ion-col>
   </ion-row>
   
@@ -50,7 +56,10 @@
    
 
       <ion-button icon-start class="google" type="submit" expand="block" (click)="onLoginGoogle()" expand="block" >
-        <ion-icon name="logo-google"></ion-icon> 
+        <ion-icon name="logo-google" slot="start">
+          
+        </ion-icon> 
+        <ion-label>Loguearse con Google</ion-label>
       </ion-button>
         
     </ion-col>
@@ -59,7 +68,9 @@
   <ion-col >
       
       <ion-button type="submit" expand="block" class="facebook" (click)="onLoginFacebook()" expand="block" >
-        <ion-icon name="logo-facebook"></ion-icon> </ion-button>
+        <ion-icon name="logo-facebook" slot="start"></ion-icon> 
+        <ion-label>Loguearse con facebook</ion-label>
+      </ion-button>
       </ion-col>
   </ion-row>
  
