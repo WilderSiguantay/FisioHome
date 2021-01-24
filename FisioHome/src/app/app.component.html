@@ -1,32 +1,43 @@
 <ion-app>
-  <ion-menu side="start" menuId="main-menu" content-id="main" class="my-custom-menu">
-    <ion-header>
-      <ion-toolbar color="tertiary">
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item>
-          <ion-icon name="calendar-outline" slot="start"></ion-icon>
-          <ion-label>Mis Citas</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="people-outline" slot="start"></ion-icon>
-          <ion-label>Contacto</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="notifications-outline" slot="start"></ion-icon>
-          <ion-label>Notificaciones</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="exit-outline" slot="start"></ion-icon>
-          <ion-label>Cerrar Sesión</ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-
-  <ion-router-outlet id="main"></ion-router-outlet>
+  <ion-split-pane contentId="main">
+    <!--  the side menu  -->
+    <ion-menu side="start" menuId="main-menu" contentId="main" class="my-custom-menu">
+      <ion-header>
+        <ion-toolbar color="tertiary">
+          <ion-title class="subtitulo">Menu</ion-title>
+          <ion-buttons slot="secondary">
+            <ion-button >
+              <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-menu-toggle>
+          <ion-list>
+            <ion-item button="true" detail="true">
+              <ion-icon name="calendar-outline" slot="start"></ion-icon>
+              <ion-label class="normal">Mis Citas</ion-label>
+            </ion-item>
+            <ion-item button="true" detail="true">
+              <ion-icon name="people-outline" slot="start"></ion-icon>
+              <ion-label class="normal" >Contacto</ion-label>
+            </ion-item>
+            <ion-item button="true" detail="true">
+              <ion-icon name="notifications-outline" slot="start"></ion-icon>
+              <ion-label class="normal">Notificaciones</ion-label>
+            </ion-item >
+            <ion-item button="true" (click)="logout()">
+              <ion-icon name="exit-outline" slot="start"></ion-icon>
+              <ion-label class="normal">Cerrar Sesión</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-menu-toggle>
+      </ion-content>
+    </ion-menu>
+     <!-- the main content -->
+     <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-split-pane>
+  
 </ion-app>
 

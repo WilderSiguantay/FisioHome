@@ -1,13 +1,20 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"  menu="main-menu"></ion-menu-button>
   
+    <ion-buttons slot="start">
+      <ion-button  (click)="openFirst()" >
+        <ion-icon color="primary" slot="icon-only" name="menu-sharp"></ion-icon>
+      </ion-button>
     </ion-buttons>
+
     <ion-buttons slot="secondary">
-      <ion-button>
+      <ion-button (click)="openFirst()" >
         <ion-icon slot="icon-only" name="star"></ion-icon>
       </ion-button>
+
+     
+
+
     </ion-buttons>
     <ion-title>Principal</ion-title>
   </ion-toolbar>
@@ -15,10 +22,7 @@
 
 
 <ion-content>
-  <div>
-    <!-- Searchbar with cancel button never shown -->
-    <ion-searchbar showCancelButton="never"></ion-searchbar>
-  </div>
+ 
     
       <ion-content class="card-background-page">
         <ion-card>
@@ -71,7 +75,7 @@
             </p>
           </ion-card-content>
           <div>
-            <ion-button routerLink="/date">
+            <ion-button routerLink="/date" class="normal">
               Solicitar Cita
             </ion-button>
           </div>
@@ -80,10 +84,10 @@
         <ion-card>
           <img src="assets/espalda-cuello.jpg"/>
           <ion-card-content>
-            <ion-card-title>
+            <ion-card-title class="subtitulo">
               Espalda y Cuello
               </ion-card-title>
-            <p>
+            <p class="normal">
               Fisioterapia para la espalda dolorosa, hernias discales,
               dolor de cuello, dolor de espalda en general, ciatica y demas
               problemas relacionados con esta parte del cuerpo.
@@ -102,7 +106,7 @@
             <ion-card-title>
               Neurologicos
               </ion-card-title>
-            <p>
+            <p class="normal">
               Fisioterapia para lesiones del sistema nervioso,
               paralisis cerebral, accidentes cerebro vasculares (derrame),
               esclerosis multiple, lesiones de plexo facial y paralisis facial.
