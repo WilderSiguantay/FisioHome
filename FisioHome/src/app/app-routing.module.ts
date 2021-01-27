@@ -49,7 +49,11 @@ const routes: Routes = [
   },
   {
     path: 'set-cita',component:SetCitasComponent
+  },  {
+    path: 'addresses',
+    loadChildren: () => import('./addresses/addresses.module').then( m => m.AddressesPageModule)
   },
+
   
 ];
 

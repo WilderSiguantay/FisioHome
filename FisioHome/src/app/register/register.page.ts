@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import {Router} from '@angular/router';
 
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -13,6 +14,9 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
   }
+
+
+
 
   async onRegister(email,password){
     try {

@@ -8,7 +8,9 @@ import { take, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authSvc:AuthService, private router:Router){};
+  constructor(private authSvc:AuthService, private router:Router){
+    
+  };
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

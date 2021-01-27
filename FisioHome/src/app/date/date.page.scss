@@ -5,7 +5,7 @@
 }
 
 .div-programar{
-    margin-top: 300px;
+    margin-top: 50px;
     margin-right: 10px;
     margin-left: 10px;
 }
@@ -19,3 +19,19 @@
       margin:20px;
   
   }
+
+.div-select{
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+ion-select {
+    /* Applies to the value and placeholder color */
+    color: #545ca7;
+  
+    /* Set a different placeholder color */
+    --placeholder-color: #971e49;
+  
+    /* Set full opacity on the placeholder */
+    --placeholder-opacity: 1;
+}

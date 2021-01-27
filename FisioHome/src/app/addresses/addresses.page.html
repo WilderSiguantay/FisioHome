@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/admin" >
+        <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="subtitulo">Mis Direcciones</ion-title>
+   
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+  <h3 class="subtitulo encabezado">Administrar Direcciones</h3>
+    <!-- fab placed to the top end -->
+    <ion-fab vertical="bottom"   horizontal="end" slot="fixed">
+      <ion-fab-button (click)="NuevoItem()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+  <ion-item-group class="div-class">
+  <ion-item-divider>
+    <ion-label class="normal">Direcciones</ion-label>
+  </ion-item-divider>
+
+  <ion-item *ngFor="let direccion of direcciones">
+    <ion-label>{{direccion.direccion}}</ion-label>
+    <ion-button color="medium" (click)="newDireccion = direccion; enableNewProducto=true;">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
+    <ion-button (click)="deleteDireccion(direccion)" color="danger" >
+      <ion-icon  name="trash-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  
+</ion-item-group>
+
+
+<div class="div-class" *ngIf="enableNewProducto">
+  <ion-item-divider>
+    <ion-label slot="start" class="normal">Agregar Direccion</ion-label>
+    <ion-button (click)="enableNewProducto=false;" slot="end"  fill="clear">
+      <ion-icon name="close-outline" button="true" slot="end"></ion-icon>
+    </ion-button>
+  </ion-item-divider>
+    
+    <form>
+      <ion-item lines="full">
+        <ion-label position="floating" required='true' class="normal">Introduce nueva direccion</ion-label>
+        <ion-input [(ngModel)]="newDireccion.direccion" name="direccion" #direccion type="text"  required></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating" class="normal">Referencia</ion-label>
+        <ion-input  [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"   ></ion-input>
+      </ion-item>
+     
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="light" (click)="guardarDireccion()"  expand="block" >Guardar direccion</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+    
+</div>
+
+</ion-content>

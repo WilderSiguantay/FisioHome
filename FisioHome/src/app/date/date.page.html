@@ -12,18 +12,22 @@
 
 <ion-content>
   
-<h3 class="subtitulo">Solicitar Cita</h3>
+<h3 class="subtitulo encabezado">Solicitar Cita</h3>
 
 <div class="div-margenes">
-  <form >
+  <form  >
     <ion-item lines="full">
-      <ion-label position="floating">Introduce nueva direccion</ion-label>
-      <ion-input type="text" #direccion required></ion-input>
+      <ion-label position="floating" required='true' class="normal">Introduce nueva direccion</ion-label>
+      <ion-input [(ngModel)]="newDireccion.direccion" name="direccion" #direccion type="text"  required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating" class="normal">Referencia</ion-label>
+      <ion-input  [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"   ></ion-input>
     </ion-item>
    
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="light" (click)="guardarDireccion(direccion)" expand="block" >Guardar direccion</ion-button>
+        <ion-button type="submit" color="light" (click)="guardarDireccion()"  expand="block" >Guardar direccion</ion-button>
       </ion-col>
     </ion-row>
   </form>
@@ -31,24 +35,35 @@
 
 
 <div class="div-programar">
-  <h4>¿Cuándo?</h4>
- 
-        <ion-list>
-          <ion-item>
-            <ion-icon name="time-outline" slot="start"></ion-icon>
-            <ion-label>Lo antes posible</ion-label>
-          </ion-item>
+  <h4 class="subtitulo">¿Cuándo?</h4>
+  
+        <form>
+          <ion-list>    
+            <ion-list-header>
+              <ion-label class="subtitulo">
+                Seleccionar Direccion
+              </ion-label>
+            </ion-list-header>
+            <ion-radio-group  [(ngModel)]="newCita.direccion" name='direccion'>
+              <ion-item  *ngFor="let direccion of direcciones ">
+                <ion-label class="normal" >{{direccion.direccion}}</ion-label>
+                <ion-radio   value="{{direccion.id}}"  ></ion-radio>
+              </ion-item>
+          
+            </ion-radio-group>
+          </ion-list>
           <ion-item>
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
-            <ion-label>Programar cita para después</ion-label>
+            <ion-label class="normal">Programar </ion-label>
+            <ion-datetime [(ngModel)]="newCita.fecha" name="fecha" displayFormat="DDD MMM  H:mm"  min="2021"></ion-datetime>
           </ion-item>
-         
-        </ion-list>
+          <div>
+            <ion-button class="boton-position subtitulo" color="primary" (click)="guardarCita()" expand="block">Pedir Cita</ion-button>
+          </div>
+        </form>
 
 </div>
 
 
-<div>
-  <ion-button class="boton-position"  color="medium" expand="block">Guardar</ion-button>
-</div>
+
 </ion-content>

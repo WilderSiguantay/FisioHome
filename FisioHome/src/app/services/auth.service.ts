@@ -53,6 +53,7 @@ export class AuthService {
     try {
       const {user}= await this.afAuth.signInWithPopup(new firebase.default.auth.GoogleAuthProvider());
       this.updateUserData(user);
+      
       return user;
     } catch (error) {
       console.log('Error -->', error)
@@ -132,5 +133,8 @@ export class AuthService {
     }
   }
  
+  stateAuth(){
+    return this.afAuth.authState;
+  }
   
 }

@@ -31,6 +31,7 @@ async  onLogin(email, password){
 async onLoginGoogle(){
   try {
     const user = await this.authSvc.loginGoogle();
+    
     if(user){
       //todo: Check Email
       const isVerified = this.authSvc.isEmailVerified(user);
@@ -50,7 +51,8 @@ async onLoginFacebook(){
   try {
     const user = await this.authSvc.loginFacebook();
     if(user){
-      //todo: Check Email
+      //todo: Check Email.
+      
       const isVerified = this.authSvc.isEmailVerified(user);
       this.redirectUser(isVerified)
 

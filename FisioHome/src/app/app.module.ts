@@ -13,6 +13,8 @@ import {AngularFireModule} from "@angular/fire"
 import {AngularFirestoreModule} from "@angular/fire/firestore"
 import { environment } from 'src/environments/environment';
 import { BackendModule } from './backend/backend.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +24,10 @@ import { BackendModule } from './backend/backend.module';
     AppRoutingModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    IonicModule,
+    CommonModule,
+    FormsModule
   ], 
   providers: [
     StatusBar,
