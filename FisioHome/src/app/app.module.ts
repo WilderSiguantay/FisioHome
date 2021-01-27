@@ -15,6 +15,8 @@ import { environment } from 'src/environments/environment';
 import { BackendModule } from './backend/backend.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms'
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +29,8 @@ import { FormsModule } from '@angular/forms';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     IonicModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ], 
   providers: [
     StatusBar,
