@@ -5,47 +5,39 @@
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Registro de Usuario</ion-title>
+    <ion-title class="subtitulo">Registro de Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <h3 class="subtitulo encabezado" >Ingrese sus datos</h3>
-<form autocomplete="off">
-  <ion-item lines="full" >
-    <ion-label position="floating" class="normal">Nombre</ion-label>
-    <ion-input type="text" #nombre required></ion-input>
-  </ion-item>
-  <ion-item lines="full">
-    <ion-label position="floating" class="normal">DPI</ion-label>
-    <ion-input type="text" #dpi required></ion-input>
-  </ion-item>
-  <ion-item lines="full">
-    <ion-label class="normal">Foto DPI</ion-label>
-    <ion-buttons slot="end">
-      <ion-button >
-        <label for="file-upload">
-          <ion-icon slot="icon-only" name="images"></ion-icon>
-        </label>
-            <input id="file-upload" #fotodpi style= "display: none;" >
-      </ion-button>
-    </ion-buttons>
-  </ion-item>
+<form class="formulario" autocomplete="off" [formGroup]="usuario" (ngSubmit)="registrarse()">
+  
   <ion-item lines="full">
     <ion-label position="floating" class="normal">Email</ion-label>
-    <ion-input type="text" #email required></ion-input>
+    <ion-input formControlName="email" name="email" id="email" type="text" #email required></ion-input>
   </ion-item>
+  <ion-label class="pequeno" color="danger" *ngIf="usuario.controls.email.errors?.email && (usuario.get('email').touched || usuario.get('email').dirty)">* El email no es válido.</ion-label>
+  <ion-label class="pequeno" color="danger" *ngIf="usuario.controls.password.errors?.required && (usuario.get('email').touched || usuario.get('email').dirty)">* El email es obligatorio </ion-label>
+
   <ion-item lines="full">
     <ion-label position="floating" class="normal">Password</ion-label>
-    <ion-input type="text" #password required></ion-input>
+    <ion-input formControlName="password" name="password" id="password" type="password" #password required></ion-input>
   </ion-item>
+  <ion-label class="pequeno" color="danger" *ngIf="usuario.controls.password.errors?.required && (usuario.get('password').touched || usuario.get('password').dirty)">* El password es obligatorio </ion-label>
+  <ion-label class="pequeno" color="danger" *ngIf="usuario.controls.password.errors?.minlength && (usuario.get('password').touched || usuario.get('password').dirty)">* El password tiene que tener al menos 6 caracteres.</ion-label>
+  
   <ion-item lines="full">
     <ion-label position="floating" class="normal">Confirma tu Password</ion-label>
-    <ion-input type="password" #passwo required></ion-input>
+    <ion-input formControlName="confirmarPassword" name="confirmarPaswword" id="confirmarPaswword" type="password" #confirmarPaswword required></ion-input>
   </ion-item>
+  <ion-label class="pequeno" color="danger" *ngIf="usuario.controls.confirmarPassword.errors?.required && (usuario.get('confirmarPassword').touched || usuario.get('confirmarPassword').dirty)">* El password es obligatorio </ion-label>
+  <ion-label class="pequeno" color="danger" *ngIf="usuario.controls.confirmarPassword.errors?.minlength && (usuario.get('confirmarPassword').touched || usuario.get('confirmarPassword').dirty)">* El password tiene que tener al menos 6 caracteres.</ion-label>
+  <ion-label class="pequeno" color="danger" *ngIf="checarSiSonIguales()">* Las contraseñas no coinciden.</ion-label>
+
   <ion-row>
     <ion-col>
-      <ion-button type="submit" (click)="onRegister(email, password)"  class="normal" expand="full" >Registro</ion-button>
+      <ion-button type="submit"  [disabled]="!usuario.valid"   class="normal" expand="full" >Registro</ion-button>
     </ion-col>
   </ion-row>
 

@@ -1,0 +1,61 @@
+.profile-foto{
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+    align-self: center;
+    width: 120px;
+    height: 120px;
+    
+}
+
+.item-style{
+    display:block;
+    margin:auto;
+    margin-bottom: 10px;
+}
+
+.form-margen{
+    margin-top: 50px;
+}
+ 
+
+.profile-picture__image {
+      border-radius: 50%;
+      height: 128px;
+      width: 128px;
+}
+
+
+.button-container{
+    display:inline-block;
+    position:relative;
+}
+    
+.button-container button{
+    position: absolute;
+    bottom:0.2em;
+    right:0.4em;
+    //border-radius:1em;
+    //padding:0.2em 0.4em;
+}
+
+
+.btn-circle {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+  }
+  .btn-circle.btn-lg {
+    width: 40px;
+    height: 40px;
+    padding: 10px 0px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+  }
+  

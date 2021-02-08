@@ -6,7 +6,7 @@
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Login</ion-title>
+    <ion-title class="subtitulo">Login</ion-title>
     <ion-buttons slot="end">
       <ion-button routerLink="/">
         <ion-icon name="exit-outline"></ion-icon>
@@ -24,20 +24,23 @@
   </div>
   
   
-<form autocomplete="off">
+<form autocomplete="off" [formGroup]="loginForm" >
   <ion-item lines="full">
     <ion-label position="floating" class="normal">Email</ion-label>
-    <ion-input type="text" #email required></ion-input>
+    <ion-input formControlName="email" type="text" #email required></ion-input>
   </ion-item>
+  <ion-label class="pequeno" color="danger" *ngIf="loginForm.controls.email.errors?.required && (loginForm.get('email').touched || loginForm.get('email').dirty)">* El email es Obligatorio</ion-label>
+  <ion-label class="pequeno" color="danger" *ngIf="loginForm.controls.email.errors?.email && (loginForm.get('email').touched || loginForm.get('email').dirty)">* El email no es válido.</ion-label>
   <ion-item lines="full">
     <ion-label position="floating" class="normal">Password</ion-label>
-    <ion-input type="password" #password required></ion-input>
+    <ion-input  formControlName="password" type="password" #password required></ion-input>
   </ion-item>
+  <ion-label class="pequeno" color="danger" *ngIf="loginForm.controls.password.errors?.required && (loginForm.get('password').touched || loginForm.get('password').dirty)">* El password es Obligatorio</ion-label>
+  <ion-label class="pequeno" color="danger" *ngIf="loginForm.controls.password.errors?.minlength && (loginForm.get('password').touched || loginForm.get('password').dirty)">* El password tiene que tener al menos 6 caracteres.</ion-label>
+
   <ion-row>
     <ion-col>
-      <ion-button type="submit" color="light" (click)="onLogin(email, password)" expand="block" >Login</ion-button>
-      
-      
+      <ion-button  type="submit" color="light" [disabled]="!loginForm.valid"  (click)="onLogin()" expand="block" >Login</ion-button>
     </ion-col>
   </ion-row>
   

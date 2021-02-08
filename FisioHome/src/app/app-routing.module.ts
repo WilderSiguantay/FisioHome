@@ -49,11 +49,20 @@ const routes: Routes = [
   },
   {
     path: 'set-cita',component:SetCitasComponent
-  },  {
+  },
+  {
     path: 'addresses',
     loadChildren: () => import('./addresses/addresses.module').then( m => m.AddressesPageModule)
   },
-
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'my-dates',
+    loadChildren: () => import('./my-dates/my-dates.module').then( m => m.MyDatesPageModule)
+  },
+ 
   
 ];
 

@@ -33,32 +33,30 @@
       <ion-icon  name="trash-outline"></ion-icon>
     </ion-button>
   </ion-item>
-
-  
 </ion-item-group>
 
 
 <div class="div-class" *ngIf="enableNewProducto">
   <ion-item-divider>
     <ion-label slot="start" class="normal">Agregar Direccion</ion-label>
-    <ion-button (click)="enableNewProducto=false;" slot="end"  fill="clear">
-      <ion-icon name="close-outline" button="true" slot="end"></ion-icon>
+    <ion-button fill="clear" (click)="enableNewProducto=false;" slot="end"  >
+      <ion-icon name="close-outline" color="dark" button="true"></ion-icon>
     </ion-button>
   </ion-item-divider>
     
-    <form>
+    <form [formGroup]="DireccionForm">
       <ion-item lines="full">
         <ion-label position="floating" required='true' class="normal">Introduce nueva direccion</ion-label>
-        <ion-input [(ngModel)]="newDireccion.direccion" name="direccion" #direccion type="text"  required></ion-input>
+        <ion-input formControlName="direccion" [(ngModel)]="newDireccion.direccion" name="direccion" #direccion type="text"  required></ion-input>
       </ion-item>
+      <ion-label class="pequeno" color="danger" *ngIf="DireccionForm.controls.direccion.errors?.required && (DireccionForm.get('direccion').touched || DireccionForm.get('direccion').dirty)">* La direccion es obligatorio </ion-label>  
       <ion-item lines="full">
         <ion-label position="floating" class="normal">Referencia</ion-label>
-        <ion-input  [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"   ></ion-input>
+        <ion-input  formControlName="direccion" [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"></ion-input>
       </ion-item>
-     
       <ion-row>
         <ion-col>
-          <ion-button type="submit" color="light" (click)="guardarDireccion()"  expand="block" >Guardar direccion</ion-button>
+          <ion-button type="submit" [disabled]="!DireccionForm.valid"   color="light" (click)="guardarDireccion()"  expand="block" >Guardar direccion</ion-button>
         </ion-col>
       </ion-row>
     </form>

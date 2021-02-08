@@ -14,23 +14,32 @@
   
 <h3 class="subtitulo encabezado">Solicitar Cita</h3>
 
-<div class="div-margenes">
-  <form  >
+<div class="alfinal" *ngIf="!enableForm" >
+  <ion-button  (click)="nuevaDireccion()" slot="end"  color="secondary" size="small" slot="end">Agregar Direccion</ion-button>
+</div>
+
+
+
+<div class="div-margenes" *ngIf="enableForm" >
+  <ion-item-divider>
+    <ion-label class="normal">Agregar Direccion</ion-label>
+    <ion-button  fill="clear" (click)="enableForm=false;" slot="end"   >
+      <ion-icon name="close-outline"  color="dark"  button="true" ></ion-icon>
+    </ion-button>
+  </ion-item-divider>
+  <form [formGroup]="direccionForm"  >
     <ion-item lines="full">
       <ion-label position="floating" required='true' class="normal">Introduce nueva direccion</ion-label>
-      <ion-input  [(ngModel)]="newDireccion.direccion" name="direccion" #direccion type="text"  required></ion-input>
-      <span  class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
-        Direccion es requerida
-      </span>
+      <ion-input formControlName="direccion"  [(ngModel)]="newDireccion.direccion" name="direccion" #direccion type="text"  required></ion-input>
     </ion-item>
+    <ion-label class="pequeno" color="danger" *ngIf="direccionForm.controls.direccion.errors?.required && (direccionForm.get('direccion').touched || direccionForm.get('direccion').dirty)">* La direccion es obligatorio </ion-label>  
     <ion-item lines="full">
       <ion-label position="floating" class="normal">Referencia</ion-label>
-      <ion-input  [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"   ></ion-input>
+      <ion-input formControlName="referencia"  [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"   ></ion-input>
     </ion-item>
-   
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="light" (click)="guardarDireccion()"  expand="block" >Guardar direccion</ion-button>
+        <ion-button type="submit" [disabled]="!direccionForm.valid" color="light" (click)="guardarDireccion()"  expand="block" >Guardar direccion</ion-button>
       </ion-col>
     </ion-row>
   </form>
@@ -40,21 +49,18 @@
 <div class="div-programar">
   
   
-        <form>
+        <form >
           <ion-list>    
-            <ion-list-header>
-              <ion-label class="subtitulo">
-                Seleccionar Direccion
-              </ion-label>
-            </ion-list-header>
-            <ion-radio-group  [(ngModel)]="newCita.direccion" name='direccion'>
+     
+            <ion-radio-group lines="full" ng-required="true" [(ngModel)]="newCita.direccion" name='direccion'>
+              <ion-list-header>
+                <ion-label class="subtitulo">Selecciona dirección</ion-label>
+              </ion-list-header>
               <ion-item  *ngFor="let direccion of direcciones ">
-                <ion-label class="normal" >{{direccion.direccion}}</ion-label>
-                <ion-radio    value="{{direccion.id}}"  ></ion-radio>
-              
+                <ion-label  class="normal" >{{direccion.direccion}}</ion-label>
+                <ion-radio class="radio radio-inline radio-gray" slot="start" value="{{direccion.id}}"  ></ion-radio>
               </ion-item>
-          
-            </ion-radio-group>
+            </ion-radio-group>            
           </ion-list>
           <ion-list-header>
             <ion-label class="subtitulo">
@@ -64,15 +70,18 @@
           <ion-item>
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <ion-label class="normal">Fecha y Hora </ion-label>
-            <ion-datetime [(ngModel)]="newCita.fecha" name="fecha" displayFormat="DDD MMM  H:mm"  min="2021"></ion-datetime>
+            <ion-datetime  [(ngModel)]="newCita.fecha" name="fecha" displayFormat="DDD MMM  H:mm"  min="2021"></ion-datetime>
           </ion-item>
           <div>
-            <ion-button class="boton-position subtitulo" color="primary" (click)="guardarCita()" expand="block">Programar Cita</ion-button>
+            <ion-button class="boton-position subtitulo"  color="primary" (click)="guardarCita()" expand="block">Programar Cita</ion-button>
           </div>
+          <ion-label class="pequeno" color="danger" *ngIf="newCita.direccion == null">*La direccion es obligatoria </ion-label>  
+
         </form>
 
 </div>
 
+  
 
 
 </ion-content>

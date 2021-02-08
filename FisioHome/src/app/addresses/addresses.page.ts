@@ -3,6 +3,7 @@ import { LoadingController, ToastController, AlertController } from '@ionic/angu
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
 import { Direccion } from '../shared/user.interface';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-addresses',
@@ -21,12 +22,14 @@ export class AddressesPage implements OnInit {
 
   //variables para guardar en base de datos
   newDireccion : Direccion;
+  DireccionForm: FormGroup;
 
   constructor(private authSvc: AuthService, 
     public firestoreService:FirestoreService, 
     public loadingController:LoadingController,
     public toastController: ToastController, 
-    public alertController: AlertController) { }
+    public alertController: AlertController,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.authSvc.stateAuth().subscribe(res => {
@@ -35,6 +38,11 @@ export class AddressesPage implements OnInit {
         this.uId = res.uid;
         this.getDirecciones();
       }
+    });
+
+    this.DireccionForm = this.formBuilder.group({
+      direccion: new FormControl('', Validators.required),
+      rerefencia : new FormControl('',),
     });
    
   }

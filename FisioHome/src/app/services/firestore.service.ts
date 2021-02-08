@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from "@angular/fire/firestore"
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,9 @@ export class FirestoreService {
   }
 
   //funcion para obtener documentos
-  getDoc(path:string, id:string){
+  getDoc<tipo>(path:string, id:string){
     try {
-      const collection = this.database.collection(path);//creamos y obtenemos un objeto coleccion
+      const collection = this.database.collection<tipo>(path);//creamos y obtenemos un objeto coleccion
       return collection.doc(id).valueChanges();
     } catch (error) {
       console.log('Error ->', error);
@@ -59,6 +60,7 @@ export class FirestoreService {
   getID(){
     return this.database.createId();//crea un id para guardar en la base de datos
   }
+
 
   getCollection<tipo>(path: string){
     try {

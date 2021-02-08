@@ -22,10 +22,8 @@ export class DatePage implements OnInit {
   uId= '';
   private pathDireccion="direcciones/";
   private pathCita = "citas/"
+  enableForm = false;
 
-  ionicForm: FormGroup;
-  defaultDate = "1987-06-30";
-  isSubmitted = false;
 
   //variables para guardar en base de datos
   newDireccion : Direccion={
@@ -34,6 +32,9 @@ export class DatePage implements OnInit {
     direccion: '',
     referencia: ''
   }
+
+  direccionForm: FormGroup;
+  citaForm: FormGroup;
 
   newCita : Cita={
     id: this.firestoreService.getID(),
@@ -49,7 +50,8 @@ export class DatePage implements OnInit {
     public firestoreService:FirestoreService, 
     public loadingController:LoadingController,
     public toastController: ToastController, 
-    public alertController: AlertController,public formBuilder: FormBuilder ) { 
+    public alertController: AlertController,
+    public formBuilder: FormBuilder) { 
 
   }
 
@@ -63,21 +65,24 @@ export class DatePage implements OnInit {
         this.getDirecciones();
       }
     });
-
-    this.ionicForm = this.formBuilder.group({
-      direccion: ['', [Validators.required, Validators.minLength(5)]],
-      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      dob: [this.defaultDate],
-      mobile: ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
+    //formulario de direccion
+    this.direccionForm = this.formBuilder.group({
+      direccion: ['', [Validators.required]],
+      referencia: ['', ],
     })
-   
 
+    //formulario de citas
+    this.citaForm = this.formBuilder.group({
+      direccion: ['', [Validators.required]],
+      fecha: ['', [Validators.required]]
+    });
   }
 
 
 
   
   getDirecciones(){
+
     this.firestoreService.getDocumento<Direccion>(this.pathDireccion, 'usuario', this.uId).subscribe(res =>{
       this.direcciones = res;
       console.log(this.direcciones);
@@ -98,11 +103,28 @@ export class DatePage implements OnInit {
   async presentToast(msg:string) {
     const toast = await this.toastController.create({
       cssClass: 'normal',
+      header: "Exito!",
       message: msg,
-      duration: 2000
+      duration: 2000,
+      color: "success"
     });
     toast.present();
   }
+
+  
+  async presentToastError(msg:string) {
+    const toast = await this.toastController.create({
+      cssClass: 'normal',
+      header: "Ocurrió un error!",
+      message: msg,
+      duration: 2000,
+      animated: true,
+      color: "danger",
+      keyboardClose: true
+    });
+    toast.present();
+  }
+
 
   
   guardarDireccion(){
@@ -113,12 +135,14 @@ export class DatePage implements OnInit {
       this.loading.dismiss();
       this.presentToast("Guadada exitosamente.");
     }).catch(error =>{
-      this.presentToast("Error al guardar dirección.");
+      this.presentToastError("Error al guardar dirección.");
     });
   }
 
 
   async guardarCita() {
+
+
 
     const alert = await this.alertController.create({
       cssClass: 'normal',
@@ -135,7 +159,11 @@ export class DatePage implements OnInit {
         }, {
           text: 'Si',
           handler: () => {
-            console.log('Confirm Okay');
+
+         
+            
+            if(this.newCita.direccion != "" && this.newCita.fecha != ""){
+              console.log('Confirm Okay');
             this.presentLoading("Programando cita");
             this.newCita.paciente = this.uId;
             this.newCita.estado = 'Pendiente';
@@ -156,9 +184,14 @@ export class DatePage implements OnInit {
               console.log(this.newCita);
             }).catch(error =>{
               this.loading.dismiss();
-              this.presentToast("Ocurrió un error.");
-            })
+              this.presentToastError("Ocurrió un error.");
+            });
             //this.guardarCita();
+
+            }else{
+              this.presentToastError("Direccion o Fecha no seleccionada")
+            }
+            
           }
         }
       ]
@@ -167,25 +200,8 @@ export class DatePage implements OnInit {
     await alert.present();
   }
 
-  getDate(e) {
-    let date = new Date(e.target.value).toISOString().substring(0, 10);
-    this.ionicForm.get('dob').setValue(date, {
-      onlyself: true
-    })
-  }
-
-  get errorControl() {
-    return this.ionicForm.controls;
-  }
-
-  submitForm() {
-    this.isSubmitted = true;
-    if (!this.ionicForm.valid) {
-      console.log('Please provide all the required values!')
-      return false;
-    } else {
-      console.log(this.ionicForm.value)
-    }
+  nuevaDireccion(){
+    this.enableForm= true;
   }
 
 }

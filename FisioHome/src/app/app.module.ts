@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy, MenuController } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, MenuController, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -16,6 +16,7 @@ import { BackendModule } from './backend/backend.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms'
     IonicModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireStorageModule
   ], 
   providers: [
     StatusBar,

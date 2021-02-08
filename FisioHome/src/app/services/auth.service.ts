@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../shared/user.interface';
+import { User, Usuario } from '../shared/user.interface';
 import * as firebase from 'firebase'
 import { AngularFireAuth } from "@angular/fire/auth";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore"
@@ -24,6 +24,7 @@ export class AuthService {
         
       })
     );
+    this.getUid();
   }
 
   
@@ -78,7 +79,7 @@ export class AuthService {
 
   async login(email:string, password:string): Promise<User>{
     try{
-      const{user }= await this.afAuth.signInWithEmailAndPassword(email,password);
+      const{user}= await this.afAuth.signInWithEmailAndPassword(email,password);
       this.updateUserData(user)
       return user;
     }catch(error){
@@ -114,19 +115,22 @@ export class AuthService {
 
   private updateUserData(user:User){
     const userRef:AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+
     const data:User = {
+      phoneNumber: user.phoneNumber,
+      photoURL: user.photoURL,
       uid:user.uid,
       email: user.email,
       emailVerified: user.emailVerified,
       displayName : user.displayName,
     };
-
+    
     return userRef.set(data,{merge:true});
   }
 
   async getUid(){
     const user = await this.afAuth.currentUser;
-    if (user === undefined){
+    if (user === null){
       return null;
     }else{
       return user.uid;
