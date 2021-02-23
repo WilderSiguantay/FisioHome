@@ -12,7 +12,20 @@
 
 <ion-content>
   <!--Subtitulo-->  
-  <h3 class="subtitulo encabezado">Mis Citas</h3>
+  <h3 class="subtitulo encabezado" >Mis Citas</h3>
+
+
+  <!-- Default Segment -->
+  <div class="m-3">
+    <ion-segment mode="ios" (ionChange)="changeSegment($event)">
+      <ion-segment-button value="curso">
+        <ion-label class="normal">En curso</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="finalizados">
+        <ion-label class="normal">Finalizadas</ion-label>
+      </ion-segment-button>
+    </ion-segment>        
+  </div>
 
 
 <ion-card *ngFor="let cita of citas">

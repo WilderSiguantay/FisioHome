@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, Usuario } from '../shared/user.interface';
+import { User } from '../shared/user.interface';
 import * as firebase from 'firebase'
 import { AngularFireAuth } from "@angular/fire/auth";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore"
@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   public user$:Observable<User>;
   provider = new firebase.default.auth.FacebookAuthProvider();
-  constructor(public afAuth:AngularFireAuth, private afs:AngularFirestore , private router : Router) { 
+  constructor(public afAuth:AngularFireAuth, private afs:AngularFirestore , private firestoreservice:FirestoreService, private router : Router) { 
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user)=>{
         if(user){
@@ -113,20 +114,31 @@ export class AuthService {
 
   }
 
-  private updateUserData(user:User){
-    const userRef:AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+  async  updateUserData(user:User){
+      const userRef:AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+      
 
-    const data:User = {
-      phoneNumber: user.phoneNumber,
-      photoURL: user.photoURL,
-      uid:user.uid,
-      email: user.email,
-      emailVerified: user.emailVerified,
-      displayName : user.displayName,
-    };
-    
-    return userRef.set(data,{merge:true});
+      this.firestoreservice.getDocumento<User>('users', 'email', user.email).subscribe(res => {
+        if(res.length > 0){
+          console.log('Usuario ya existe')
+        }else{
+          const data:User = {
+            phoneNumber: user.phoneNumber,
+            photoURL: user.photoURL,
+            uid:user.uid,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            displayName : user.displayName,
+          };
+          
+          return userRef.set(data,{merge:true});
+        }
+    });
   }
+
+
+
+
 
   async getUid(){
     const user = await this.afAuth.currentUser;

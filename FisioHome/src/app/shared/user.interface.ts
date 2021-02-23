@@ -1,5 +1,3 @@
-import { Timestamp } from "rxjs/internal/operators/timestamp";
-
 export interface User{
     uid: string;
     email: string;
@@ -9,32 +7,24 @@ export interface User{
     photoURL: string;
 }
 
-export interface Usuario{
-    uid:string;
-    displayName: string;
-    DPI: string;
-    photoURL: string;
-    email : string;
-    phoneNumber: string;
-    emailVerified: boolean;
-}
 
 export interface Cita{
     id:string;
-    paciente:string;
-    profesional:string;
+    paciente:User;
+    profesional:User;
     estado:EstadoCita;
     fecha:string;
     fechaCreacion: Date;
     precio:number;
-    direccion: string;
+    direccion: Direccion;
+    valoracion: number
 }
 
 export interface Direccion{
     id:string;
-    usuario:string;
+    usuario:User;
     direccion:any;
     referencia:string;
 }
 
-export type EstadoCita = 'solicitada' | 'visto'| 'camino'| 'finalizada'
+export type EstadoCita = 'Solicitada' | 'Cancelada'| 'Visto'| 'Camino'| 'Finalizada';

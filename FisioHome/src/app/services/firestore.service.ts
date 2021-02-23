@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
+import { FirebaseApp } from '@angular/fire';
 import {AngularFirestore} from "@angular/fire/firestore"
-import { AuthService } from './auth.service';
+import firebase from "firebase/app";
+import "firebase/database";
+import { User } from '../shared/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
 
-  constructor(public database:AngularFirestore) { }
-
+  
+  constructor(public database:AngularFirestore, private firebase: FirebaseApp) { }
   //Funcion para guardar y crear documento
   createDoc(data: any,  path: string , id: string ){
     console.log(data);
@@ -33,6 +36,8 @@ export class FirestoreService {
     }
     
   }
+
+
 
   //funcion para eliminar un documento
   deleteDoc(path:string, id:string){

@@ -1,30 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
 import { User } from '../shared/user.interface';
 import { FirestorageService } from '../services/firestorage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements OnInit, OnDestroy {
   
   //Variables a utilizar
   //user: User;//producto que es un arreglo de muchos productos
   loading:any;
   alert:any;
   uId = "";
-  private currentDate = new Date();
+  public currentDate = new Date();
   botonEnable = false;
-
   newImage :any;
-  
   private path="users/";
-
+  userSubscribe: Subscription;
+  clienteSubscribe: Subscription;
   //variables para guardar en base de datos
   Usuario : User ={
     uid: '',
@@ -34,6 +34,7 @@ export class ProfilePage implements OnInit {
     phoneNumber: '',
     photoURL: '',
   };
+
   constructor(private authSvc: AuthService, 
     public firestoreService:FirestoreService, 
     public loadingController:LoadingController,
@@ -42,7 +43,7 @@ export class ProfilePage implements OnInit {
     public formBuilder: FormBuilder, 
     public firestorageService: FirestorageService) 
     { 
-      this.authSvc.stateAuth().subscribe(res => {
+      this.userSubscribe=this.authSvc.stateAuth().subscribe(res => {
         //console.log(res.uid);
         if (res!== null){
           this.uId = res.uid;
@@ -53,6 +54,10 @@ export class ProfilePage implements OnInit {
       });
     }
 
+  ngOnDestroy(){
+    this.userSubscribe ? this.userSubscribe.unsubscribe():console.log("No está suscrito");
+    this.clienteSubscribe ? this.clienteSubscribe.unsubscribe(): console.log("No está suscrito");
+  }
   ngOnInit() {
 
   }
@@ -141,7 +146,7 @@ async presentToastError(msg:string) {
 
   getUserInfo(uid: string){
     const path = "users";
-    this.firestoreService.getDoc<User>(path,uid).subscribe( res => {
+    this.clienteSubscribe=this.firestoreService.getDoc<User>(path,uid).subscribe( res => {
         this.Usuario = res;
     });
   }

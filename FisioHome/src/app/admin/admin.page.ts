@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
-
+  public tipoCita:string;
   constructor(private menu: MenuController, private Authf: AuthService) { }
 
   ngOnInit() {
