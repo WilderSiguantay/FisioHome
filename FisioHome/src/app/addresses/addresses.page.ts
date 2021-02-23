@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
-import { Direccion } from '../shared/user.interface';
+import { Direccion, User } from '../shared/user.interface';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-addresses',
   templateUrl: './addresses.page.html',
   styleUrls: ['./addresses.page.scss'],
 })
-export class AddressesPage implements OnInit {
+export class AddressesPage implements OnInit , OnDestroy{
 
   //VARIABLES
   uId= '';
@@ -19,23 +20,39 @@ export class AddressesPage implements OnInit {
   alert:any;
   private pathDireccion="direcciones/";
   enableNewProducto = false;
+  paciente: User;
+  pathUser = "users/"
 
   //variables para guardar en base de datos
   newDireccion : Direccion;
   DireccionForm: FormGroup;
+  userSuscribe: Subscription;
+  direccionSuscribe: Subscription;
+  clienteSuscribe: Subscription;
 
   constructor(private authSvc: AuthService, 
     public firestoreService:FirestoreService, 
     public loadingController:LoadingController,
     public toastController: ToastController, 
     public alertController: AlertController,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder) { 
+
+    }
+
+  ngOnDestroy(){
+     this.userSuscribe ?  this.userSuscribe.unsubscribe() : console.log("No esta subscrito");
+     this.direccionSuscribe ?  this.userSuscribe.unsubscribe():console.log("No esta subscrito");
+     this.clienteSuscribe ?  this.userSuscribe.unsubscribe():console.log("No esta subscrito");
+     
+  }
+
 
   ngOnInit() {
-    this.authSvc.stateAuth().subscribe(res => {
+    this. userSuscribe= this.authSvc.stateAuth().subscribe(res => {
       console.log(res.uid);
       if (res!== null){
         this.uId = res.uid;
+        this.loadCliente();
         this.getDirecciones();
       }
     });
@@ -49,7 +66,7 @@ export class AddressesPage implements OnInit {
 
 
   getDirecciones(){
-    this.firestoreService.getDocumento<Direccion>(this.pathDireccion, 'usuario', this.uId).subscribe(res =>{
+    this.userSuscribe= this.firestoreService.getDocumento<Direccion>(this.pathDireccion, 'usuario.uid', this.uId).subscribe(res =>{
       this.direcciones = res;
       console.log(this.direcciones);
     })
@@ -98,15 +115,17 @@ export class AddressesPage implements OnInit {
     this.enableNewProducto = true;
     this.newDireccion = {
       id: this.firestoreService.getID(),
-      usuario: '',
+      usuario: this.paciente,
       direccion: '',
       referencia: ''
     }
   }
+
+  
   guardarDireccion(){
 
     this.presentLoading('Guardando...');
-    this.newDireccion.usuario = this.uId;
+    this.newDireccion.usuario = this.paciente;
     this.firestoreService.createDoc(this.newDireccion,this.pathDireccion,this.newDireccion.id).then( res =>{
       this.loading.dismiss();
       this.presentToast("Guadada exitosamente.");
@@ -137,6 +156,16 @@ export class AddressesPage implements OnInit {
     });
     toast.present();
   }
+
+
+
+  loadCliente(){
+    this.clienteSuscribe= this.firestoreService.getDoc<User>(this.pathUser, this.uId).subscribe(res =>{
+      this.paciente = res;
+    })
+
+  }
+
 
 
 
