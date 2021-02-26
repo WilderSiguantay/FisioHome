@@ -73,7 +73,11 @@
           <ion-item>
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <ion-label class="normal">Fecha y Hora </ion-label>
-            <ion-datetime   [(ngModel)]="newCita.fecha" name="fecha" formControlName="fecha" #fecha displayFormat="DDD MMM  H:mm"  min="2021"></ion-datetime>
+            <ion-datetime   [(ngModel)]="newCita.fecha" name="fecha" minuteValues="0,15,30,45" formControlName="fecha" #fecha displayFormat="DDD MMM  H:mm"  min="2021"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label>hh:mm A (15 min steps)</ion-label>
+            <ion-datetime displayFormat="H:mm" minuteValues="0,30"></ion-datetime>
           </ion-item>
           <ion-label class="pequeno" color="danger" *ngIf="DireccionForm.controls.fecha.errors?.required && (DireccionForm.get('fecha').touched || DireccionForm.get('fecha').dirty)">* La <b>Fecha</b> es obligatorio </ion-label>  
 

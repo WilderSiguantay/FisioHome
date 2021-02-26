@@ -11,33 +11,33 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class ForgotPasswordPage  {
 
-  loading:any;
-  alert:any;
+  loading: any;
+  alert: any;
   formCorreo: FormGroup;
-  
 
-  constructor(private authSvc:AuthService, 
-    private router: Router,
-    public loadingController:LoadingController,
-    public toastController: ToastController, 
-    public alertController: AlertController,
-    public formBuilder: FormBuilder) { 
+
+  constructor(private authSvc: AuthService,
+              private router: Router,
+              public loadingController: LoadingController,
+              public toastController: ToastController,
+              public alertController: AlertController,
+              public formBuilder: FormBuilder) {
 
       this.formCorreo = this.formBuilder.group({
         email: new FormControl('', Validators.email),
-    })
-  
+    });
+
   }
 
-  
+
 
   async onResetPasword(email){
     try {
-      this.presentLoading("Programando cita");
+      this.presentLoading('Programando cita');
       await this.authSvc.resetPassword(email.value);
       this.loading.dismiss();
-      this.presentToast("Correo enviado, revisa tu bandeja de entrada")
-      this.router.navigate(['/login'])
+      this.presentToast('Correo enviado, revisa tu bandeja de entrada');
+      this.router.navigate(['/login']);
 
     } catch (error) {
       this.loading.dismiss();
@@ -47,31 +47,31 @@ export class ForgotPasswordPage  {
   }
 
 
-   
-  async presentToastError(msg:string) {
+
+  async presentToastError(msg: string) {
     const toast = await this.toastController.create({
       cssClass: 'normal',
-      header: "Ocurrió un error!",
+      header: 'Ocurrió un error!',
       message: msg,
       duration: 2000,
       animated: true,
-      color: "danger",
+      color: 'danger',
       keyboardClose: true
     });
     toast.present();
   }
-  
-  async presentLoading(msg:string) {
+
+  async presentLoading(msg: string) {
     this.loading = await this.loadingController.create({
       cssClass: 'normal',
       message: msg,
     });
     await this.loading.present();
-    //await loading.onDidDismiss();
-    //console.log('Loading dismissed!');
+    // await loading.onDidDismiss();
+    // console.log('Loading dismissed!');
   }
 
-  async presentToast(msg:string) {
+  async presentToast(msg: string) {
     const toast = await this.toastController.create({
       cssClass: 'normal',
       message: msg,
@@ -84,7 +84,7 @@ export class ForgotPasswordPage  {
     const alert = await this.alertController.create({
       cssClass: 'normal',
       header: 'Informacion',
-      message: 'Seguro que este es el correo <strong>'+email.value+' </strong> que desea recuperar',
+      message: 'Seguro que este es el correo <strong>' + email.value + ' </strong> que desea recuperar',
       buttons: [
         {
           text: 'Cancelar',
@@ -96,12 +96,12 @@ export class ForgotPasswordPage  {
         }, {
           text: 'Si',
           handler: () => {
-            this.onResetPasword(email)
+            this.onResetPasword(email);
           }
         }
       ]
     });
-    
+
     await alert.present();
   }
 

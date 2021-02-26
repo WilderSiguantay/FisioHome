@@ -15,25 +15,25 @@ import { validarQueSeanIguales } from '../app.validator';
 export class RegisterPage implements OnInit {
 
   usuario: FormGroup;
-  
-  
 
 
-  constructor(private authSvc:AuthService, private router: Router, public formBuilder: FormBuilder) { }
+
+
+  constructor(private authSvc: AuthService, private router: Router, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.usuario = this.formBuilder.group({
       email: new FormControl('', Validators.email),
       password : new FormControl('', [Validators.required, Validators.minLength(6)]),
-      confirmarPassword : new FormControl('',[Validators.required, Validators.minLength(6)])
-    },{
+      confirmarPassword : new FormControl('', [Validators.required, Validators.minLength(6)])
+    }, {
       validators: validarQueSeanIguales
     });
 
 
   }
 
-  
+
   checarSiSonIguales(): boolean {
     return this.usuario.hasError('noSonIguales') &&
       this.usuario.get('password').dirty &&
@@ -41,44 +41,44 @@ export class RegisterPage implements OnInit {
   }
 
 
-  async onRegister(email,password){
+  async onRegister(email, password){
 
     try {
       const user = await this.authSvc.register(email.value, password.value);
-      
-      if (user){ //Verificar si usuario esta verificado
+
+      if (user){ // Verificar si usuario esta verificado
         console.log('User ->', user);
         const isVerified = this.authSvc.isEmailVerified(user);
         this.redirectUser(isVerified);
       }
     } catch (error) {
-      console.log("Error ->", error);
+      console.log('Error ->', error);
     }
   }
 
-  private redirectUser(isVerified:boolean): void{
+  private redirectUser(isVerified: boolean): void{
     if (isVerified) {
-      //redireccionar a admin
+      // redireccionar a admin
       this.router.navigate(['confirmar']);
     } else {
       this.router.navigate(['verify-email']);
-      //else pagina de verificacion
+      // else pagina de verificacion
     }
   }
 
   async registrarse(){
     try {
       const user = await this.authSvc.register(this.usuario.value.email, this.usuario.value.password);
-      
-      if (user){ //Verificar si usuario esta verificado
+
+      if (user){ // Verificar si usuario esta verificado
         console.log('User ->', user);
         const isVerified = this.authSvc.isEmailVerified(user);
         this.redirectUser(isVerified);
       }
     } catch (error) {
-      console.log("Error ->", error);
+      console.log('Error ->', error);
     }
-    
+
   }
 
 

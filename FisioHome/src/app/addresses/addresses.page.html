@@ -55,10 +55,14 @@
         </ion-buttons>
       </ion-item>
     
+      <ion-item lines="full">
+        <ion-label position="floating" class="normal">Dirección</ion-label>
+        <ion-input disabled=true formControlName="direccion" [(ngModel)]="newDireccion.direccion" name="direccion" #referencia type="text"></ion-input>
+      </ion-item>
       <ion-label class="pequeno" color="danger" *ngIf="DireccionForm.controls.direccion.errors?.required && (DireccionForm.get('direccion').touched || DireccionForm.get('direccion').dirty)">* La direccion es obligatorio </ion-label>  
       <ion-item lines="full">
-        <ion-label position="floating" class="normal">Referencia</ion-label>
-        <ion-input  formControlName="referencia" [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"></ion-input>
+        <ion-label position="floating" class="normal">Referencia o aclaración</ion-label>
+        <ion-input   formControlName="referencia" [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"></ion-input>
       </ion-item>
       <ion-row>
         <ion-col>

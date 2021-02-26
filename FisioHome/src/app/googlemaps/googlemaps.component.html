@@ -11,18 +11,19 @@
 
 
 <ion-content>
-  <div id="floating-panel">
-    <input id="latlng" type="text" />
-    <input id="submit" type="button" value="Reverse Geocode" />
-  </div>
+ 
   <div #map class="map">
 
   </div>
   
-  <ion-chip class="aceptar" color="tertiary" (click)="mylocation();">
-    <ion-label class="normal" >Mi ubicación actual</ion-label>
-    <ion-icon name="pin-outline"></ion-icon>
-  </ion-chip>
+
+  <ion-row>
+    <ion-col>
+      <ion-button  (click)="mylocation();" color="tertiary" mode="ios" shape="round" class="aceptar" >
+        <ion-icon name="locate-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+</ion-row>
   
 
  
@@ -31,10 +32,19 @@
 
 <ion-footer>
   <ion-toolbar>
-   
+   <ion-row>
+     <ion-col>
+      <label class="subtitulo">Mueve el marcador hasta el punto de encuentro</label>
+     </ion-col>
+   </ion-row>
+   <ion-row>
+     <ion-col>
+       <label class="normal">{{direccion}}</label>
+     </ion-col>
+   </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button  (click)="aceptar();" color="primary" expand="full" >
+        <ion-button  (click)="aceptar();" mode="ios" color="primary" expand="full" >
           Aceptar
         <ion-icon slot="end" name="checkmark"></ion-icon>
         </ion-button>

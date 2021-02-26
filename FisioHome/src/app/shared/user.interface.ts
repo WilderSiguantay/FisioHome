@@ -9,25 +9,26 @@ export interface User{
 
 
 export interface Cita{
-    id:string;
-    paciente:User;
-    profesional:User;
-    estado:EstadoCita;
-    fecha:string;
+    id: string;
+    paciente: User;
+    profesional: User;
+    estado: EstadoCita;
+    fecha: string;
     fechaCreacion: Date;
-    precio:number;
+    precio: number;
     direccion: Direccion;
-    valoracion: number
+    valoracion: number;
 }
 
 export interface Direccion{
-    id:string;
-    usuario:User;
-    direccion:{
-        lat:number;
-        lng:number;
+    id: string;
+    usuario: User;
+    direccion: string;
+    ubicacion: {
+        lat: number;
+        lng: number;
     };
-    referencia:string;
+    referencia: string;
 }
 
 export type EstadoCita = 'Solicitada' | 'Cancelada'| 'Visto'| 'Camino'| 'Finalizada';

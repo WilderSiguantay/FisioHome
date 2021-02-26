@@ -8,27 +8,27 @@ import { take, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authSvc:AuthService, private router:Router){
-    
-  };
+  constructor(private authSvc: AuthService, private router: Router){
+
+  }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    
+
       return this.authSvc.user$.pipe(
         take(1),
-        map(user =>{
+        map(user => {
           console.log('User ->', user);
-          if(user){
+          if (user){
             return true;
           }else{
-            //redirigir a login page
-            this.router.navigate(['/login'])
+            // redirigir a login page
+            this.router.navigate(['/login']);
             return false;
           }
         })
-      )
+      );
     }
-  
-  
+
+
 }

@@ -137,7 +137,7 @@ export class GooglemapsComponent implements OnInit {
 
   aceptar(){
     console.log('click aceptar ->', this.positionSet);
-    this.modalController.dismiss({pos: this.positionSet});
+    this.modalController.dismiss({pos: this.positionSet, dir: this.direccion});
   }
 
 
@@ -154,8 +154,16 @@ export class GooglemapsComponent implements OnInit {
       if (status === 'OK') {
         if (results[0]) {
           // map.setZoom(11);
+          const contentString =  '<div id="contentInsideMap">' +
+                            '<div>' +
+                            '</div>' +
+                            '<p style="font-weight: class="normal" bold; margin-bottom:5px;"> Dirección  </p>' +
+                            '<div id="bodyContent">' +
+                            '<p class="pequeno m-0">' + results[0].formatted_address +
+                            '</p>';
 
-          infowindow.setContent(results[0].formatted_address);
+          infowindow.setContent(contentString);
+          this.direccion = results[0].formatted_address;
          // window.alert(results[0].formatted_address);
           infowindow.open(map, this.marker);
         } else {

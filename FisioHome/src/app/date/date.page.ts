@@ -6,7 +6,7 @@ import { FirestoreService } from '../services/firestore.service';
 import { Cita, Direccion, User } from '../shared/user.interface';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-//import {AngularFirestoreCollection} from "@angular/fire/firestore"
+// import {AngularFirestoreCollection} from "@angular/fire/firestore"
 import { AdminPage } from '../admin/admin.page';
 
 
@@ -17,16 +17,16 @@ import { AdminPage } from '../admin/admin.page';
 })
 export class DatePage implements OnInit, OnDestroy {
 
-  //Variables a utilizar
-  direcciones: Direccion []=[];//producto que es un arreglo de muchos productos
-  loading:any;
-  alert:any;
-  uId= '';
-  private pathDireccion="direcciones/";
-  private pathUser = "users/"
-  private pathCita = "citas/"
+  // Variables a utilizar
+  direcciones: Direccion [] = []; // producto que es un arreglo de muchos productos
+  loading: any;
+  alert: any;
+  uId = '';
+  private pathDireccion = 'direcciones/';
+  private pathUser = 'users/';
+  private pathCita = 'citas/';
   enableForm = false;
-  paciente : User;
+  paciente: User;
   profesional: User;
   direccionForm: FormGroup;
   citaForm: FormGroup;
@@ -38,25 +38,25 @@ export class DatePage implements OnInit, OnDestroy {
   DireccionForm: FormGroup;
 
 
-  //variables para guardar en base de datos
-  newDireccion : Direccion;
-  newCita : Cita;
+  // variables para guardar en base de datos
+  newDireccion: Direccion;
+  newCita: Cita;
   myDate = new Date();
-  constructor(private authSvc: AuthService, 
-    public firestoreService:FirestoreService, 
-    public loadingController:LoadingController,
-    public toastController: ToastController, 
-    public alertController: AlertController,
-    public formBuilder: FormBuilder,
-    ) { 
+  constructor(private authSvc: AuthService,
+              public firestoreService: FirestoreService,
+              public loadingController: LoadingController,
+              public toastController: ToastController,
+              public alertController: AlertController,
+              public formBuilder: FormBuilder,
+    ) {
       this.DireccionForm = this.formBuilder.group({
         idDireccion: new FormControl('', Validators.required),
-        fecha : new FormControl('',Validators.required),
+        fecha : new FormControl('', Validators.required),
       });
 
-      this.UserSuscriber= this.authSvc.stateAuth().subscribe(res => {
+      this.UserSuscriber = this.authSvc.stateAuth().subscribe(res => {
         console.log(res.uid);
-        if (res!== null){
+        if (res !== null){
           this.uId = res.uid;
           this.loadCliente();
           this.getDirecciones();
@@ -67,50 +67,55 @@ export class DatePage implements OnInit, OnDestroy {
   }
 
 
-//Evento que se ejecuta al final
+// Evento que se ejecuta al final
   ngOnDestroy(){
 
-    this.direccionSuscriber ? this.direccionSuscriber.unsubscribe:console.log("No está suscrito");
-    this.direccionSuscriber2 ? this.direccionSuscriber2.unsubscribe:console.log("No está suscrito");
-    this.clienteSuscriber ? this.clienteSuscriber.unsubscribe:console.log("No está suscrito");
-    this.UserSuscriber ? this.UserSuscriber.unsubscribe:console.log("No está suscrito");
-    this.direccionForm.reset("");
+    // tslint:disable-next-line: no-unused-expression
+    this.direccionSuscriber ? this.direccionSuscriber.unsubscribe : console.log('No está suscrito');
+    // tslint:disable-next-line: no-unused-expression
+    this.direccionSuscriber2 ? this.direccionSuscriber2.unsubscribe : console.log('No está suscrito');
+    // tslint:disable-next-line: no-unused-expression
+    this.clienteSuscriber ? this.clienteSuscriber.unsubscribe : console.log('No está suscrito');
+    // tslint:disable-next-line: no-unused-expression
+    this.UserSuscriber ? this.UserSuscriber.unsubscribe : console.log('No está suscrito');
+    this.direccionForm.reset('');
   }
 
-//llama funciones cuando carga pagina
+// llama funciones cuando carga pagina
   ngOnInit() {
-    
 
-    //formulario de direccion
+
+    // formulario de direccion
     this.direccionForm = this.formBuilder.group({
       direccion: ['', [Validators.required]],
       referencia: ['', ],
-    })
+    });
 
-    //formulario de citas
+    // formulario de citas
     this.citaForm = this.formBuilder.group({
       direccion: ['', [Validators.required]],
       fecha: ['', [Validators.required]]
     });
 
-    this.newCita ={
+    this.newCita = {
       id: this.firestoreService.getID(),
-      paciente:this.paciente,
-      profesional:this.paciente,
-      estado:'Solicitada',
-      fecha:'',
+      paciente: this.paciente,
+      profesional: this.paciente,
+      estado: 'Solicitada',
+      fecha: '',
       direccion: this.newDireccion,
-      precio:175.00,
-      fechaCreacion:this.myDate,
+      precio: 175.00,
+      fechaCreacion: this.myDate,
       valoracion: 0
-    }
+    };
 
-    this.newDireccion ={
+    this.newDireccion = {
       id: this.firestoreService.getID(),
       usuario: this.paciente,
-      direccion: null,
+      direccion: '',
+      ubicacion: null,
       referencia: ''
-    }
+    };
 
 
   }
@@ -118,14 +123,14 @@ export class DatePage implements OnInit, OnDestroy {
 
 
 
-  
+
   getDirecciones(){
 
-    this.direccionSuscriber = this.firestoreService.getDocumento<Direccion>(this.pathDireccion, 'usuario.uid', this.uId).subscribe(res =>{
+    this.direccionSuscriber = this.firestoreService.getDocumento<Direccion>(this.pathDireccion, 'usuario.uid', this.uId).subscribe(res => {
       this.direcciones = res;
-      console.log(res.length)
+      console.log(res.length);
       console.log(this.direcciones);
-      
+
 
     });
   }
@@ -135,46 +140,46 @@ export class DatePage implements OnInit, OnDestroy {
       message: msg,
     });
     await this.loading.present();
-    //await loading.onDidDismiss();
-    //console.log('Loading dismissed!');
+    // await loading.onDidDismiss();
+    // console.log('Loading dismissed!');
   }
 
-  async presentToast(msg:string) {
+  async presentToast(msg: string) {
     const toast = await this.toastController.create({
       cssClass: 'normal',
-      header: "Exito!",
+      header: 'Exito!',
       message: msg,
       duration: 2000,
-      color: "success"
+      color: 'success'
     });
     toast.present();
   }
 
-  
-  async presentToastError(msg:string) {
+
+  async presentToastError(msg: string) {
     const toast = await this.toastController.create({
       cssClass: 'normal',
-      header: "Ocurrió un error!",
+      header: 'Ocurrió un error!',
       message: msg,
       duration: 2000,
       animated: true,
-      color: "danger",
+      color: 'danger',
       keyboardClose: true
     });
     toast.present();
   }
 
 
-  
+
   guardarDireccion(){
 
     this.presentLoading('Guardando...');
     this.newDireccion.usuario = this.paciente;
-    this.firestoreService.createDoc(this.newDireccion,this.pathDireccion,this.newDireccion.id).then( res =>{
+    this.firestoreService.createDoc(this.newDireccion, this.pathDireccion, this.newDireccion.id).then( res => {
       this.loading.dismiss();
-      this.presentToast("Guadada exitosamente.");
-    }).catch(error =>{
-      this.presentToastError("Error al guardar dirección.");
+      this.presentToast('Guadada exitosamente.');
+    }).catch(error => {
+      this.presentToastError('Error al guardar dirección.');
     });
   }
 
@@ -185,10 +190,10 @@ export class DatePage implements OnInit, OnDestroy {
     this.direccionSuscriber2 = this.firestoreService.getDoc<Direccion>(this.pathDireccion, this.idDireccion).subscribe(res => {
       this.newDireccion = res;
       this.newCita.direccion = this.newDireccion;
-      console.log("Direccion de cita->", this.newCita.direccion);
-      
+      console.log('Direccion de cita->', this.newCita.direccion);
+
     });
-    
+
     const alert = await this.alertController.create({
       cssClass: 'normal',
       header: 'Informacion',
@@ -209,58 +214,59 @@ export class DatePage implements OnInit, OnDestroy {
         }
       ]
     });
-    
+
     await alert.present();
   }
 
   loadCliente(){
-    this.clienteSuscriber= this.firestoreService.getDoc<User>(this.pathUser, this.uId).subscribe(res =>{
+    this.clienteSuscriber = this.firestoreService.getDoc<User>(this.pathUser, this.uId).subscribe(res => {
       this.paciente = res;
 
-    })
+    });
 
   }
 
   async almacenarCita(){
-      if(this.newCita.direccion != null && this.newCita.fecha != ""){
+      // tslint:disable-next-line: triple-equals
+      if (this.newCita.direccion != null && this.newCita.fecha != ''){
         console.log('Confirm Okay');
-        this.presentLoading("Programando cita");
+        this.presentLoading('Programando cita');
         this.newCita.paciente = this.paciente;
         this.newCita.profesional = null;
         this.newCita.estado = 'Solicitada';
         this.newCita.precio = 175;
         console.log(this.newCita);
-        this.firestoreService.createDoc(this.newCita, this.pathCita,this.newCita.id).then(res=>{
-        console.log(res)
+        this.firestoreService.createDoc(this.newCita, this.pathCita, this.newCita.id).then(res => {
+        console.log(res);
         this.loading.dismiss();
-        this.presentToast("Cita programada");
+        this.presentToast('Cita programada');
         this.newCita = {
           id: this.firestoreService.getID(),
-          paciente:this.paciente,
-          profesional:this.paciente,
-          estado:'Solicitada',
-          fecha:'',
+          paciente: this.paciente,
+          profesional: this.paciente,
+          estado: 'Solicitada',
+          fecha: '',
           direccion: this.newDireccion,
-          precio:175.00,
+          precio: 175.00,
           fechaCreacion: this.myDate,
-          valoracion:0
-        }
-        
-        
-      }).catch(error =>{
+          valoracion: 0
+        };
+
+
+      }).catch(error => {
         this.loading.dismiss();
-        this.presentToastError("Ocurrió un error.");
+        this.presentToastError('Ocurrió un error.');
       });
-      //this.guardarCita();
+      // this.guardarCita();
 
       }else{
-        this.presentToastError("Direccion o Fecha no seleccionada")
+        this.presentToastError('Direccion o Fecha no seleccionada');
       }
   }
-  
+
 
   nuevaDireccion(){
-    this.enableForm= true;
+    this.enableForm = true;
   }
 
 }

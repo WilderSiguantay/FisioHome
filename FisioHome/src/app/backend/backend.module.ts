@@ -9,8 +9,8 @@ import { SetCitasComponent } from './set-citas/set-citas.component';
     SetCitasComponent
   ],
   imports: [
-    CommonModule, 
-    
+    CommonModule,
+
   ]
 })
 export class BackendModule { }

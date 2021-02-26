@@ -7,6 +7,7 @@ describe('ChatPage', () => {
   let component: ChatPage;
   let fixture: ComponentFixture<ChatPage>;
 
+  // tslint:disable-next-line: deprecation
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ChatPage ],

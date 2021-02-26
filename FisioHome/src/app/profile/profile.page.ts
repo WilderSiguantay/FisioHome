@@ -13,20 +13,20 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit, OnDestroy {
-  
-  //Variables a utilizar
-  //user: User;//producto que es un arreglo de muchos productos
-  loading:any;
-  alert:any;
-  uId = "";
+
+  // Variables a utilizar
+  // user: User;//producto que es un arreglo de muchos productos
+  loading: any;
+  alert: any;
+  uId = '';
   public currentDate = new Date();
   botonEnable = false;
-  newImage :any;
-  private path="users/";
+  newImage: any;
+  private path = 'users/';
   userSubscribe: Subscription;
   clienteSubscribe: Subscription;
-  //variables para guardar en base de datos
-  Usuario : User ={
+  // variables para guardar en base de datos
+  Usuario: User = {
     uid: '',
     email: '',
     displayName: '',
@@ -35,17 +35,17 @@ export class ProfilePage implements OnInit, OnDestroy {
     photoURL: '',
   };
 
-  constructor(private authSvc: AuthService, 
-    public firestoreService:FirestoreService, 
-    public loadingController:LoadingController,
-    public toastController: ToastController, 
-    public alertController: AlertController,
-    public formBuilder: FormBuilder, 
-    public firestorageService: FirestorageService) 
-    { 
-      this.userSubscribe=this.authSvc.stateAuth().subscribe(res => {
-        //console.log(res.uid);
-        if (res!== null){
+  constructor(private authSvc: AuthService,
+              public firestoreService: FirestoreService,
+              public loadingController: LoadingController,
+              public toastController: ToastController,
+              public alertController: AlertController,
+              public formBuilder: FormBuilder,
+              public firestorageService: FirestorageService)
+    {
+      this.userSubscribe = this.authSvc.stateAuth().subscribe(res => {
+        // console.log(res.uid);
+        if (res !== null){
           this.uId = res.uid;
           this.getUserInfo(this.uId);
         }else{
@@ -55,34 +55,36 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
   ngOnDestroy(){
-    this.userSubscribe ? this.userSubscribe.unsubscribe():console.log("No está suscrito");
-    this.clienteSubscribe ? this.clienteSubscribe.unsubscribe(): console.log("No está suscrito");
+    this.userSubscribe ? this.userSubscribe.unsubscribe() : console.log('No está suscrito');
+    this.clienteSubscribe ? this.clienteSubscribe.unsubscribe() : console.log('No está suscrito');
   }
   ngOnInit() {
 
   }
-  
+
   initCliente(){
-    this.Usuario ={
+    this.Usuario = {
       uid : '',
       email: '',
       displayName: '',
       emailVerified: false,
       phoneNumber: '',
-      photoURL:''
-    }
+      photoURL: ''
+    };
   }
 
 
-  newImagePerfil(event:any){
-    if(event.target.files && event.target.files[0]){
+  newImagePerfil(event: any){
+    if (event.target.files && event.target.files[0]){
       const reader = new FileReader();
-      reader.onload = ((image) =>{
+      reader.onload = ((image) => {
         this.newImage = image.target.result as string;
         this.Usuario.photoURL = this.newImage;
-        var n = this.currentDate.getDate().toString() +"-" +  this.currentDate.getMonth().toString() +"-"  +this.currentDate.getFullYear().toString()+"-" + 
-        this.currentDate.getHours().toString()+":" +this.currentDate.getMinutes().toString()+":"+this.currentDate.getMilliseconds().toString();
-        this.newImageUpload(event,n);
+        const n = this.currentDate.getDate().toString() + '-' +
+        this.currentDate.getMonth().toString() + '-'  + this.currentDate.getFullYear().toString() + '-' +
+        this.currentDate.getHours().toString() + ':' +
+        this.currentDate.getMinutes().toString() + ':' + this.currentDate.getMilliseconds().toString();
+        this.newImageUpload(event, n);
 
 
       });
@@ -91,51 +93,51 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   async newImageUpload(event: any, n: string){
-    const path = 'FotoPerfil'; 
-    const name = this.uId+ "-"+n;
+    const path = 'FotoPerfil';
+    const name = this.uId + '-' + n;
     const file = event.target.files[0];
-    const res = await this.firestorageService.uploadImage(file,path,name);
+    const res = await this.firestorageService.uploadImage(file, path, name);
     this.Usuario.photoURL = res;
     console.log(res);
-    console.log(this.Usuario.photoURL)
-    this.botonEnable= true;
+    console.log(this.Usuario.photoURL);
+    this.botonEnable = true;
 
   }
- 
- 
+
+
 async guardarUsuario(){
   try {
-    this.firestoreService.createDoc(this.Usuario,this.path,this.Usuario.uid).then(res =>{
-      this.presentToast("Informacion Actualizada con éxito!")
+    this.firestoreService.createDoc(this.Usuario, this.path, this.Usuario.uid).then(res => {
+      this.presentToast('Informacion Actualizada con éxito!');
     });
-  } catch (error) { 
-    console.log("Error ->", error)
+  } catch (error) {
+    console.log('Error ->', error);
     this.presentToastError('Error al actualizar datos');
   }
 }
 
 
 
-async presentToast(msg:string) {
+async presentToast(msg: string) {
   const toast = await this.toastController.create({
     cssClass: 'normal',
-    header: "Exito!",
+    header: 'Exito!',
     message: msg,
     duration: 2000,
-    color: "success"
+    color: 'success'
   });
   toast.present();
 }
 
 
-async presentToastError(msg:string) {
+async presentToastError(msg: string) {
   const toast = await this.toastController.create({
     cssClass: 'normal',
-    header: "Ocurrió un error!",
+    header: 'Ocurrió un error!',
     message: msg,
     duration: 2000,
     animated: true,
-    color: "danger",
+    color: 'danger',
     keyboardClose: true
   });
   toast.present();
@@ -145,8 +147,8 @@ async presentToastError(msg:string) {
 
 
   getUserInfo(uid: string){
-    const path = "users";
-    this.clienteSubscribe=this.firestoreService.getDoc<User>(path,uid).subscribe( res => {
+    const path = 'users';
+    this.clienteSubscribe = this.firestoreService.getDoc<User>(path, uid).subscribe( res => {
         this.Usuario = res;
     });
   }
