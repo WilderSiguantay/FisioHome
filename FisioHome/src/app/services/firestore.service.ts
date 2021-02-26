@@ -89,4 +89,15 @@ export class FirestoreService {
     }
   }
 
+
+  //Metodos para hacerconsultas
+  getCollectionQuery<tipo>(path:string, parametro:string, condicion:any, valor:string, usuario:string, idUsuario: string){
+    try {
+      const collection = this.database.collection<tipo>(path, ref => ref.where(parametro, condicion, valor).where(usuario,condicion,idUsuario)); 
+      return collection.valueChanges();//devuelve un observable para obtener toda la informacion
+    } catch (error) {
+      console.log('Error ->', error);
+    }
+  }
+
 }

@@ -15,11 +15,11 @@ import { element } from 'protractor';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private authSvc: AuthService,private router: Router, 
-    public loadingController:LoadingController,
-    public toastController: ToastController, 
-    public formBuilder: FormBuilder,
-    private alertCtrl: AlertController,
+  constructor(private authSvc: AuthService, private router: Router,
+              public loadingController: LoadingController,
+              public toastController: ToastController,
+              public formBuilder: FormBuilder,
+              private alertCtrl: AlertController,
     ) { }
 
   ngOnInit() {
@@ -35,44 +35,44 @@ async  onLogin(){
     try {
       const user = await this.authSvc.login(this.loginForm.value.email, this.loginForm.value.password);
       if (user){
-        //todo: CheckEmail
+        // todo: CheckEmail
         const isVerified = this.authSvc.isEmailVerified(user);
-        this.redirectUser(isVerified)
+        this.redirectUser(isVerified);
       }else{
         this.presentConfirm();
-        
+
         this.loginForm = this.formBuilder.group({
           email: new FormControl('', Validators.email),
           password : new FormControl('', [Validators.required, Validators.minLength(6)]),
         });
 
-        
+
       }
     } catch (error) {
       this.presentConfirm();
-      console.log("Error ->" , error.t.message);
+      console.log('Error ->' , error.t.message);
 
 
     }
   }
 
-  //Login Google
+  // Login Google
 
 async onLoginGoogle(){
   try {
     const user = await this.authSvc.loginGoogle();
-    
-    if(user){
-      //todo: Check Email
-      const isVerified = this.authSvc.isEmailVerified(user);
-      this.redirectUser(isVerified)
 
-      //console.log("User ->",isVerified);
-      //console.log("User ->",user );
+    if (user){
+      // todo: Check Email
+      const isVerified = this.authSvc.isEmailVerified(user);
+      this.redirectUser(isVerified);
+
+      // console.log("User ->",isVerified);
+      // console.log("User ->",user );
     }
   } catch (error) {
-    console.log("Error ->", error);
-    this.presentToast(error.message)
+    console.log('Error ->', error);
+    this.presentToast(error.message);
 
   }
 }
@@ -82,33 +82,33 @@ async onLoginGoogle(){
 async onLoginFacebook(){
   try {
     const user = await this.authSvc.loginFacebook();
-    if(user){
-      //todo: Check Email.
-      
-      const isVerified = this.authSvc.isEmailVerified(user);
-      this.redirectUser(isVerified)
+    if (user){
+      // todo: Check Email.
 
-      //console.log("User ->",isVerified);
-      //console.log("User ->",user );
+      const isVerified = this.authSvc.isEmailVerified(user);
+      this.redirectUser(isVerified);
+
+      // console.log("User ->",isVerified);
+      // console.log("User ->",user );
     }
   } catch (error) {
-    console.log("Error ->", error);
-    this.presentToast(error.message)
+    console.log('Error ->', error);
+    this.presentToast(error.message);
   }
 }
 
-private redirectUser(isVerified:boolean): void{
+private redirectUser(isVerified: boolean): void{
   if (isVerified) {
-    //redireccionar a admin
+    // redireccionar a admin
     this.router.navigate(['admin']);
   } else {
     this.router.navigate(['verify-email']);
-    //else pagina de verificacion
+    // else pagina de verificacion
   }
 }
 
 
-async presentToast(msg:string) {
+async presentToast(msg: string) {
   const toast = await this.toastController.create({
     cssClass: 'normal',
     message: msg,
@@ -116,7 +116,7 @@ async presentToast(msg:string) {
   });
   toast.present();
 }
-  
+
 async presentAlert() {
   const alert = await this.alertCtrl.create({
     header: 'Low battery',
@@ -127,7 +127,7 @@ async presentAlert() {
 
 
 async presentConfirm() {
-  let alert = await this.alertCtrl.create({
+  const alert = await this.alertCtrl.create({
     header: 'Error de sesion',
     subHeader: 'Usuario desconocido',
     message: 'Este usuario no existe en la base de datos. ¿Desea crear uno nuevo?',
@@ -152,7 +152,7 @@ async presentConfirm() {
 
 
 async presentPrompt() {
-  let alert = await this.alertCtrl.create({
+  const alert = await this.alertCtrl.create({
     header: 'Login',
     inputs: [
       {
@@ -190,7 +190,7 @@ async presentPrompt() {
 }
 
 
-  
+
 
 
 }

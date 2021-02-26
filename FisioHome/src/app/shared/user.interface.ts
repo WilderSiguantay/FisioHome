@@ -23,7 +23,10 @@ export interface Cita{
 export interface Direccion{
     id:string;
     usuario:User;
-    direccion:any;
+    direccion:{
+        lat:number;
+        lng:number;
+    };
     referencia:string;
 }
 

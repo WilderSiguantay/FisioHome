@@ -108,7 +108,7 @@ export class DatePage implements OnInit, OnDestroy {
     this.newDireccion ={
       id: this.firestoreService.getID(),
       usuario: this.paciente,
-      direccion: '',
+      direccion: null,
       referencia: ''
     }
 
@@ -188,6 +188,7 @@ export class DatePage implements OnInit, OnDestroy {
       console.log("Direccion de cita->", this.newCita.direccion);
       
     });
+    
     const alert = await this.alertController.create({
       cssClass: 'normal',
       header: 'Informacion',

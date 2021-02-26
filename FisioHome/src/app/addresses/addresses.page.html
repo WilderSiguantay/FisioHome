@@ -45,10 +45,16 @@
   </ion-item-divider>
     
     <form [formGroup]="DireccionForm">
-      <ion-item lines="full">
-        <ion-label position="floating" required='true' class="normal">Introduce nueva direccion</ion-label>
-        <ion-input formControlName="direccion" [(ngModel)]="newDireccion.direccion" name="direccion" #direccion type="text"  required></ion-input>
+  
+      <ion-item  (click)="addDireccion();">
+        <ion-label class="normal">Ubicación</ion-label>
+        <ion-buttons slot="end">
+          <ion-button >
+            <ion-icon slot="icon-only" color="primary" name="location"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-item>
+    
       <ion-label class="pequeno" color="danger" *ngIf="DireccionForm.controls.direccion.errors?.required && (DireccionForm.get('direccion').touched || DireccionForm.get('direccion').dirty)">* La direccion es obligatorio </ion-label>  
       <ion-item lines="full">
         <ion-label position="floating" class="normal">Referencia</ion-label>
@@ -60,6 +66,8 @@
         </ion-col>
       </ion-row>
     </form>
+
+    
     
 </div>
 

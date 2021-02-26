@@ -11,6 +11,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  admin = false;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -23,7 +24,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.splashScreen.show();
     });
   }
 

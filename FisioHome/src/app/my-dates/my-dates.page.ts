@@ -19,6 +19,7 @@ export class MyDatesPage implements OnInit, OnDestroy {
   alert:any;
   userSubscribe : Subscription;
   citasSubscribe: Subscription;
+  citasFinalizadasSubscriber: Subscription;
   private path="citas/";
   constructor(private authSvc: AuthService, 
     public firestoreService:FirestoreService, 
@@ -29,40 +30,58 @@ export class MyDatesPage implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.userSubscribe? this.userSubscribe.unsubscribe():console.log("No está subscrito");
     this.citasSubscribe? this.citasSubscribe.unsubscribe(): console.log("No está subscrito");
+    this.citasFinalizadasSubscriber? this.citasFinalizadasSubscriber.unsubscribe(): console.log("No está subscrito");
   }
   ngOnInit() {
     this.userSubscribe= this.authSvc.stateAuth().subscribe(res => {
       console.log(res.uid);
       if (res!== null){
         this.uId = res.uid;
-        this.getCitas(this.uId);
+        this.getCitasNuevas();
+//        this.getCitas(this.uId);
       }
     });
   }
 
   
   getCitas(id:string){
-    this.citasSubscribe=this.firestoreService.getDocumento<Cita>(this.path, 'paciente.uid', id).subscribe(res =>{
+   /* this.citasSubscribe=this.firestoreService.getDocumento<Cita>(this.path, 'paciente.uid', id).subscribe(res =>{
       this.citas = res;
       console.log(this.citas);
-    })
+    })*/
   }
 
   cancelarCita(){
 
   }
 
-  async getCitasNuevas(){
-    console.log('get Citas Nuevas');
-    
+  getCitasNuevas(){
+    this.citasSubscribe=this.firestoreService.getCollectionQuery<Cita>(this.path, 'estado','==','Solicitada', 'paciente.uid', this.uId).subscribe(res =>{
+      this.citas = res;
+      console.log(this.citas);
+    })
   }
 
-  async getCitasAnteriores(){
-    
+  getCitasAnteriores(){
+    this.citasFinalizadasSubscriber=this.firestoreService.getCollectionQuery<Cita>(this.path, 'estado','==','Finalizada', 'paciente.uid', this.uId).subscribe(res =>{
+      this.citas = res;
+      console.log(this.citas);
+    })
   }
 
   changeSegment(event: any){
-    console.log('ChangeSegment', event.detail.value);
+    const opcion = event.detail.value;
+    if(opcion == "finalizados"){
+      this.getCitasAnteriores();
+      this.citasSubscribe? this.citasSubscribe.unsubscribe(): console.log("No está subscrito");
+     // this.citasSubscribe.unsubscribe();
+    }else if(opcion == "solicitados"){
+      this.getCitasNuevas();
+      this.citasFinalizadasSubscriber? this.citasFinalizadasSubscriber.unsubscribe(): console.log("No está subscrito");
+      //this.citasSubscribe.unsubscribe();
+
+    }
+   
   }
 
 

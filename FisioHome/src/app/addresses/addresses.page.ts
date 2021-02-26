@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController, ModalController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
 import { Direccion, User } from '../shared/user.interface';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { GooglemapsComponent } from '../googlemaps/googlemaps.component';
 
 @Component({
   selector: 'app-addresses',
@@ -35,7 +36,8 @@ export class AddressesPage implements OnInit , OnDestroy{
     public loadingController:LoadingController,
     public toastController: ToastController, 
     public alertController: AlertController,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder,
+    private modalController: ModalController) { 
 
     }
 
@@ -58,8 +60,8 @@ export class AddressesPage implements OnInit , OnDestroy{
     });
 
     this.DireccionForm = this.formBuilder.group({
-      direccion: new FormControl('', Validators.required),
-      rerefencia : new FormControl('',),
+      direccion: new FormControl(''),
+      referencia : new FormControl(''),
     });
    
   }
@@ -116,7 +118,7 @@ export class AddressesPage implements OnInit , OnDestroy{
     this.newDireccion = {
       id: this.firestoreService.getID(),
       usuario: this.paciente,
-      direccion: '',
+      direccion: null,
       referencia: ''
     }
   }
@@ -164,6 +166,33 @@ export class AddressesPage implements OnInit , OnDestroy{
       this.paciente = res;
     })
 
+  }
+
+  async addDireccion(){
+    const ubicacion = this.newDireccion.direccion
+    let position = {
+      lat: 14.642070, 
+      lng: -90.514025
+    }
+
+    if (ubicacion !== null) {
+      position = ubicacion;
+    }
+
+    const modalAdd = await this.modalController.create({
+      component: GooglemapsComponent,
+      mode: 'ios',
+      swipeToClose: true,
+      componentProps: {position}
+    });
+    await modalAdd.present();
+    const {data}= await modalAdd.onWillDismiss();
+
+    if(data){
+      console.log('data ->', data);
+      this.newDireccion.direccion = data.pos;
+      console.log('this.direccion->', this.newDireccion);
+    }
   }
 
 

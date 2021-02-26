@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="modalController.dismiss()">
+        <ion-icon name="arrow-back" color="dark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="normal ion-text-wrap">Seleccionar mi ubicación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div id="floating-panel">
+    <input id="latlng" type="text" />
+    <input id="submit" type="button" value="Reverse Geocode" />
+  </div>
+  <div #map class="map">
+
+  </div>
+  
+  <ion-chip class="aceptar" color="tertiary" (click)="mylocation();">
+    <ion-label class="normal" >Mi ubicación actual</ion-label>
+    <ion-icon name="pin-outline"></ion-icon>
+  </ion-chip>
+  
+
+ 
+  
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+   
+    <ion-row>
+      <ion-col>
+        <ion-button  (click)="aceptar();" color="primary" expand="full" >
+          Aceptar
+        <ion-icon slot="end" name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-col>
+  </ion-row>
+  </ion-toolbar>
+</ion-footer>

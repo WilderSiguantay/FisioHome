@@ -18,7 +18,7 @@
     <ion-input formControlName="email" name="email" id="email" type="text" #email required></ion-input>
   </ion-item>
   <ion-label class="pequeno" color="danger" *ngIf="usuario.controls.email.errors?.email && (usuario.get('email').touched || usuario.get('email').dirty)">* El email no es válido.</ion-label>
-  <ion-label class="pequeno" color="danger" *ngIf="usuario.controls.password.errors?.required && (usuario.get('email').touched || usuario.get('email').dirty)">* El email es obligatorio </ion-label>
+  <ion-label class="pequeno" color="danger" *ngIf="usuario.controls.email.errors?.required && (usuario.get('email').touched || usuario.get('email').dirty)">* El email es obligatorio </ion-label>
 
   <ion-item lines="full">
     <ion-label position="floating" class="normal">Password</ion-label>
