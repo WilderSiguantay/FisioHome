@@ -35,25 +35,31 @@
 
 <ion-card *ngFor="let cita of citas">
 
-
   <ion-card-header>
     <ion-card-subtitle class="normal">Estado: {{cita.estado}}</ion-card-subtitle>
-    <ion-card-title class="subtitulo"> Fisioterapeuta: {{cita.profesional}}</ion-card-title>
+    <ion-card-title class="subtitulo">Fisioterapeuta: {{cita.profesional}}</ion-card-title>
   </ion-card-header>
-  
-  
+
+  <ion-item>
+    <ion-icon name="location-outline" slot="start"></ion-icon>
+    <ion-label class="pequeno md-8">{{cita.direccion.direccion}}</ion-label>   
+  </ion-item>
+
     <ion-item>
       <ion-icon name="calendar-outline" slot="start"></ion-icon>
-      <ion-label class="normal">Fecha: </ion-label>
       <ion-label>{{cita.fecha}}</ion-label>   
     </ion-item>
   
   <ion-item >
     <ion-icon name="card-outline" slot="start"></ion-icon>
     <ion-label>Precio: </ion-label>
-    <ion-label>{{cita.precio}}</ion-label>
-    <ion-button fill="outline" slot="end">Ver en tiempo real</ion-button>
+    <ion-label>Q. {{cita.precio}}</ion-label>
   </ion-item>
+  <ion-item *ngIf="cita.estado == 'Solicitada'">
+    <ion-button class="pequeno" >Ver en tiempo real <ion-icon name="eye" slot="end"></ion-icon></ion-button>
+    <ion-button class="pequeno" (click)="cancelarCita(cita)" color="danger" slot="end">Cancelar Cita<ion-icon name="close-circle" slot="end"></ion-icon></ion-button>
+  </ion-item>
+    <ion-button color="success" *ngIf="cita.estado == 'Finalizada'" expand="block" class="normal" >Calificar Cita <ion-icon slot="end" name="thumbs-up"></ion-icon></ion-button>
 </ion-card>
 
 <ion-card>

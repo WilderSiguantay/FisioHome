@@ -27,19 +27,29 @@
       <ion-icon name="close-outline"  color="dark"  button="true" ></ion-icon>
     </ion-button>
   </ion-item-divider>
-  <form [formGroup]="direccionForm"  >
-    <ion-item lines="full">
-      <ion-label position="floating" required='true' class="normal">Introduce nueva direccion</ion-label>
-      <ion-input formControlName="direccion"  [(ngModel)]="newDireccion.direccion" name="direccion" #direccion type="text"  required></ion-input>
+  <form [formGroup]="DireccionForm">
+  
+    <ion-item  (click)="addDireccion();">
+      <ion-label class="normal">Ubicación</ion-label>
+      <ion-buttons slot="end">
+        <ion-button >
+          <ion-icon slot="icon-only" color="primary" name="location"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-item>
-    <ion-label class="pequeno" color="danger" *ngIf="direccionForm.controls.direccion.errors?.required && (direccionForm.get('direccion').touched || direccionForm.get('direccion').dirty)">* La direccion es obligatorio </ion-label>  
+  
     <ion-item lines="full">
-      <ion-label position="floating" class="normal">Referencia</ion-label>
-      <ion-input formControlName="referencia"  [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"   ></ion-input>
+      <ion-label position="floating" class="normal">Dirección</ion-label>
+      <ion-input disabled=true formControlName="direccion" [(ngModel)]="newDireccion.direccion" name="direccion" #direccion type="text"></ion-input>
+    </ion-item>
+    <ion-label class="pequeno" color="danger" *ngIf="DireccionForm.controls.direccion.errors?.required && (DireccionForm.get('direccion').touched || DireccionForm.get('direccion').dirty)">* La direccion es obligatorio </ion-label>  
+    <ion-item lines="full">
+      <ion-label position="floating" class="normal">Referencia o aclaración</ion-label>
+      <ion-input   formControlName="referencia" [(ngModel)]="newDireccion.referencia" name="referencia" #referencia type="text"></ion-input>
     </ion-item>
     <ion-row>
       <ion-col>
-        <ion-button type="submit" [disabled]="!direccionForm.valid" color="light" (click)="guardarDireccion()"  expand="block" >Guardar direccion</ion-button>
+        <ion-button type="submit" [disabled]="!DireccionForm.valid"   color="light" (click)="guardarDireccion()"  expand="block" >Guardar direccion</ion-button>
       </ion-col>
     </ion-row>
   </form>
@@ -51,7 +61,7 @@
 <div class="div-programar">
   
   
-        <form [formGroup]="DireccionForm"  >
+        <form [formGroup]="citaForm"  >
           <ion-list>    
      
             <ion-radio-group  formControlName="idDireccion" [(ngModel)]="idDireccion" name="idDireccion" #direccion type="text"  required>
@@ -64,7 +74,7 @@
               </ion-item>
             </ion-radio-group>   
           </ion-list>
-          <ion-label class="pequeno" color="danger" *ngIf="DireccionForm.controls.idDireccion.errors?.required && (DireccionForm.get('idDireccion').touched || DireccionForm.get('idDireccion').dirty)">* La <b>Dirección</b> es obligatorio </ion-label>  
+          <ion-label class="pequeno" color="danger" *ngIf="citaForm.controls.idDireccion.errors?.required && (citaForm.get('idDireccion').touched || citaForm.get('idDireccion').dirty)">* La <b>Dirección</b> es obligatorio </ion-label>  
           <ion-list-header>
             <ion-label class="subtitulo">
               ¿Cuando?
@@ -79,7 +89,7 @@
             <ion-label>hh:mm A (15 min steps)</ion-label>
             <ion-datetime displayFormat="H:mm" minuteValues="0,30"></ion-datetime>
           </ion-item>
-          <ion-label class="pequeno" color="danger" *ngIf="DireccionForm.controls.fecha.errors?.required && (DireccionForm.get('fecha').touched || DireccionForm.get('fecha').dirty)">* La <b>Fecha</b> es obligatorio </ion-label>  
+          <ion-label class="pequeno" color="danger" *ngIf="citaForm.controls.fecha.errors?.required && (citaForm.get('fecha').touched || citaForm.get('fecha').dirty)">* La <b>Fecha</b> es obligatorio </ion-label>  
 
         </form>
 </div>

@@ -82,15 +82,7 @@ async onLoginGoogle(){
 async onLoginFacebook(){
   try {
     const user = await this.authSvc.loginFacebook();
-    if (user){
-      // todo: Check Email.
-
-      const isVerified = this.authSvc.isEmailVerified(user);
-      this.redirectUser(isVerified);
-
-      // console.log("User ->",isVerified);
-      // console.log("User ->",user );
-    }
+    console.log(user);
   } catch (error) {
     console.log('Error ->', error);
     this.presentToast(error.message);

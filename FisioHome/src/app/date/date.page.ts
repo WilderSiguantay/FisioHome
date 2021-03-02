@@ -1,6 +1,6 @@
 import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController, ModalController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
 import { Cita, Direccion, User } from '../shared/user.interface';
@@ -8,6 +8,7 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs';
 // import {AngularFirestoreCollection} from "@angular/fire/firestore"
 import { AdminPage } from '../admin/admin.page';
+import { GooglemapsComponent } from '../googlemaps/googlemaps.component';
 
 
 @Component({
@@ -28,7 +29,6 @@ export class DatePage implements OnInit, OnDestroy {
   enableForm = false;
   paciente: User;
   profesional: User;
-  direccionForm: FormGroup;
   citaForm: FormGroup;
   idDireccion: string;
   direccionSuscriber: Subscription; // para suscribirse y desuscribirse
@@ -48,12 +48,8 @@ export class DatePage implements OnInit, OnDestroy {
               public toastController: ToastController,
               public alertController: AlertController,
               public formBuilder: FormBuilder,
+              private modalController: ModalController
     ) {
-      this.DireccionForm = this.formBuilder.group({
-        idDireccion: new FormControl('', Validators.required),
-        fecha : new FormControl('', Validators.required),
-      });
-
       this.UserSuscriber = this.authSvc.stateAuth().subscribe(res => {
         console.log(res.uid);
         if (res !== null){
@@ -78,22 +74,22 @@ export class DatePage implements OnInit, OnDestroy {
     this.clienteSuscriber ? this.clienteSuscriber.unsubscribe : console.log('No está suscrito');
     // tslint:disable-next-line: no-unused-expression
     this.UserSuscriber ? this.UserSuscriber.unsubscribe : console.log('No está suscrito');
-    this.direccionForm.reset('');
+    this.DireccionForm.reset('');
+    this.citaForm.reset('');
   }
 
 // llama funciones cuando carga pagina
   ngOnInit() {
-
-
-    // formulario de direccion
-    this.direccionForm = this.formBuilder.group({
-      direccion: ['', [Validators.required]],
-      referencia: ['', ],
+    // formulario direccion
+    this.DireccionForm = this.formBuilder.group({
+      direccion: new FormControl('', Validators.required),
+      referencia : new FormControl('', ),
     });
+
 
     // formulario de citas
     this.citaForm = this.formBuilder.group({
-      direccion: ['', [Validators.required]],
+      idDireccion: ['', [Validators.required]],
       fecha: ['', [Validators.required]]
     });
 
@@ -268,5 +264,35 @@ export class DatePage implements OnInit, OnDestroy {
   nuevaDireccion(){
     this.enableForm = true;
   }
+
+  async addDireccion(){
+    const ubicacion = this.newDireccion.ubicacion;
+    const direccion = this.newDireccion.direccion;
+    let position = {
+      lat: 14.642070,
+      lng: -90.514025
+    };
+
+    if (ubicacion !== null) {
+      position = ubicacion;
+    }
+
+    const modalAdd = await this.modalController.create({
+      component: GooglemapsComponent ,
+      mode: 'ios',
+      swipeToClose: true,
+      componentProps: {position}
+    });
+    await modalAdd.present();
+    const {data} = await modalAdd.onWillDismiss();
+
+    if (data){
+      console.log('data ->', data);
+      this.newDireccion.direccion = data.dir;
+      this.newDireccion.ubicacion = data.pos;
+      console.log('this.direccion->', this.newDireccion);
+    }
+  }
+
 
 }

@@ -79,7 +79,7 @@ export class AddressesPage implements OnInit , OnDestroy{
     const alert = await this.alertController.create({
       cssClass: 'normal',
       header: 'Advertencia',
-      message:  'Seguro que desea <strong>eliminar</strong> esta direccion.',
+      message:  '¿Seguro que desea <strong>eliminar</strong> esta dirección?',
       buttons: [
         {
           text: 'Cancelar',
@@ -171,7 +171,6 @@ export class AddressesPage implements OnInit , OnDestroy{
 
   async addDireccion(){
     const ubicacion = this.newDireccion.ubicacion;
-    const direccion = this.newDireccion.direccion;
     let position = {
       lat: 14.642070,
       lng: -90.514025
