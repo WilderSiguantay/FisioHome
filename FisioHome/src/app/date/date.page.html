@@ -106,13 +106,13 @@
         <ion-col size="6" class="ion-justify-content-center">
           <h3>Precio:</h3>
         </ion-col>
-        <ion-col  *ngIf="DireccionForm.valid" class="normal text-center" size="6" >
+        <ion-col  *ngIf="citaForm.valid" class="normal text-center" size="6" >
           <h3>Q.175.00</h3>
         </ion-col>
       </ion-row>
       <ion-row>
           <ion-col>
-            <ion-button class="subtitulo" [disabled]="!DireccionForm.valid"  color="primary" (click)="guardarCita()" expand="full">Programar Cita</ion-button>
+            <ion-button class="subtitulo" [disabled]="!citaForm.valid"  color="primary" (click)="guardarCita()" expand="full">Programar Cita</ion-button>
           </ion-col>
       </ion-row>
     </ion-grid>

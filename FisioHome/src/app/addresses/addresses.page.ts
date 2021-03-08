@@ -51,7 +51,6 @@ export class AddressesPage implements OnInit , OnDestroy{
 
   ngOnInit() {
     this. userSuscribe = this.authSvc.stateAuth().subscribe(res => {
-      console.log(res.uid);
       if (res !== null){
         this.uId = res.uid;
         this.loadCliente();

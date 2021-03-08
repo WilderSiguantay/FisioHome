@@ -8,21 +8,22 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import {AngularFireAuthModule} from "@angular/fire/auth"
-import {AngularFireModule} from "@angular/fire"
-import {AngularFirestoreModule} from "@angular/fire/firestore"
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { BackendModule } from './backend/backend.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), 
+  imports: [BrowserModule, IonicModule.forRoot(),
     BackendModule,
     AppRoutingModule,
     AngularFireAuthModule,
@@ -32,8 +33,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFireStorageModule
-  ], 
+    AngularFireStorageModule,
+    HttpClientModule,
+  ],
   providers: [
     StatusBar,
     SplashScreen,

@@ -14,6 +14,7 @@ import { element } from 'protractor';
 
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
+  loading: any;
 
   constructor(private authSvc: AuthService, private router: Router,
               public loadingController: LoadingController,
@@ -37,7 +38,9 @@ async  onLogin(){
       if (user){
         // todo: CheckEmail
         const isVerified = this.authSvc.isEmailVerified(user);
+        // this.presentLoading('Cargando ...');
         this.redirectUser(isVerified);
+        // this.loading.dismmis();
       }else{
         this.presentConfirm();
 
@@ -99,6 +102,15 @@ private redirectUser(isVerified: boolean): void{
   }
 }
 
+async presentLoading(msg: string) {
+  this.loading = await this.loadingController.create({
+    cssClass: 'normal',
+    message: msg,
+  });
+  await this.loading.present();
+  // await loading.onDidDismiss();
+  // console.log('Loading dismissed!');
+}
 
 async presentToast(msg: string) {
   const toast = await this.toastController.create({

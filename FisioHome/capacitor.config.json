@@ -1,5 +1,5 @@
 {
-  "appId": "com.wildersig.fisiohome",
+  "appId": "com.wildering.fisiohome",
   "appName": "FisioHome",
   "bundledWebRuntime": false,
   "npmClient": "npm",
@@ -9,5 +9,17 @@
       "launchShowDuration": 0
     }
   },
-  "cordova": {}
+  "cordova": {
+    "preferences": {
+      "ScrollEnabled": "false",
+      "BackupWebStorage": "none",
+      "SplashMaintainAspectRatio": "true",
+      "FadeSplashScreenDuration": "300",
+      "SplashShowOnlyFirstTime": "false",
+      "SplashScreen": "screen",
+      "SplashScreenDelay": "3000",
+      "GOOGLE_MAPS_ANDROID_API_KEY": "oVdDJWHMZCcvvBar72IdAy",
+      "AndroidXEnabled": "true"
+    }
+  }
 }

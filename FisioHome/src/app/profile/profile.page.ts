@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
@@ -25,6 +25,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   private path = 'users/';
   userSubscribe: Subscription;
   clienteSubscribe: Subscription;
+  usuarioForm: FormGroup;
   // variables para guardar en base de datos
   Usuario: User = {
     uid: '',
@@ -57,9 +58,14 @@ export class ProfilePage implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.userSubscribe ? this.userSubscribe.unsubscribe() : console.log('No está suscrito');
     this.clienteSubscribe ? this.clienteSubscribe.unsubscribe() : console.log('No está suscrito');
+    this.usuarioForm.reset('');
   }
   ngOnInit() {
-
+    this.usuarioForm = this.formBuilder.group({
+      nombre: new FormControl('', Validators.required),
+      email : new FormControl('', ),
+      telefono : new FormControl('', ),
+    });
   }
 
   initCliente(){
@@ -96,20 +102,44 @@ export class ProfilePage implements OnInit, OnDestroy {
     const path = 'FotoPerfil';
     const name = this.uId + '-' + n;
     const file = event.target.files[0];
-    const res = await this.firestorageService.uploadImage(file, path, name);
-    this.Usuario.photoURL = res;
-    console.log(res);
-    console.log(this.Usuario.photoURL);
-    this.botonEnable = true;
-
+    this.presentLoading('Cargando Imagen...');
+    await this.firestorageService.uploadImage(file, path, name).then(res => {
+      this.Usuario.photoURL = res;
+      console.log(res);
+      console.log(this.Usuario.photoURL);
+      this.botonEnable = true;
+      this.loading.dismiss();
+      this.presentToast('Imagen Cargada');
+    }).catch(error => {
+      this.loading.dismiss();
+      this.presentToastError('Ocurrió un error.');
+    });
   }
+
+  async presentLoading(msg: string) {
+    this.loading = await this.loadingController.create({
+      cssClass: 'normal',
+      message: msg,
+    });
+    await this.loading.present();
+    // await loading.onDidDismiss();
+    // console.log('Loading dismissed!');
+  }
+
+
 
 
 async guardarUsuario(){
   try {
+    this.presentLoading('Actualizando información...');
     this.firestoreService.createDoc(this.Usuario, this.path, this.Usuario.uid).then(res => {
-      this.presentToast('Informacion Actualizada con éxito!');
+      this.loading.dismiss();
+      this.presentToast('Información actualizada con éxito!');
+    }).catch(error => {
+      this.loading.dismiss();
+      this.presentToastError('Ocurrió un error.');
     });
+
   } catch (error) {
     console.log('Error ->', error);
     this.presentToastError('Error al actualizar datos');

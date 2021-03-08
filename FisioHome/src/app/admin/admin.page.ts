@@ -17,7 +17,6 @@ export class AdminPage implements OnInit {
     // this.menu.enable(true, 'main-menu');
     this.menu.open('main-menu');
   }
-
   openEnd() {
     this.menu.open('end');
   }

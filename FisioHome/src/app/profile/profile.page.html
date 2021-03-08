@@ -13,11 +13,10 @@
 
   
 
-  <form  class="form-margen" >
+  <form [formGroup]="usuarioForm"  class="form-margen" >
 
     <ion-item>
       <div class='button-container item-style' >
-        
         <label for="file-upload">
           <img button=true width="100%" height="100%" class="profile-foto img-thumbnail" [src]='Usuario.photoURL'>
         </label>
@@ -29,25 +28,25 @@
         </button>
       </div>
     </ion-item>
-
-
-
+    
     <ion-item lines="full">
       <ion-label position="floating" required='true' class="normal">Nombre:</ion-label>
-      <ion-input [(ngModel)]="Usuario.displayName" (change)="botonEnable=true" #displayName name="displayName"  type="text"  required></ion-input>
+      <ion-input  formControlName="nombre" [(ngModel)]="Usuario.displayName" (change)="botonEnable=true" #displayName name="displayName"  type="text"  required></ion-input>
     </ion-item>
+    <ion-label class="pequeno" color="danger" *ngIf="usuarioForm.controls.nombre.errors?.required && (usuarioForm.get('nombre').touched || usuarioForm.get('nombre').dirty)">* El nombre es obligatorio </ion-label>  
+
     <ion-item lines="full">
       <ion-label position="floating" class="normal">Correo electronico</ion-label>
-      <ion-input  [(ngModel)]="Usuario.email" disabled=true name="email" (change)="botonEnable=true"  type="text"   ></ion-input>
+      <ion-input formControlName="email" [(ngModel)]="Usuario.email" disabled=true name="email" (change)="botonEnable=true"  type="text"   ></ion-input>
     </ion-item>
     
     <ion-item lines="full">
       <ion-label position="floating" class="normal">Teléfono</ion-label>
-      <ion-input  [(ngModel)]="Usuario.phoneNumber" name="numero"  type="text" (change)="botonEnable=true"  ></ion-input>
+      <ion-input formControlName="telefono" [(ngModel)]="Usuario.phoneNumber" name="telefono"  type="text" (change)="botonEnable=true"  ></ion-input>
     </ion-item>
     <ion-row>
       <ion-col>
-        <ion-button  [disabled]="!botonEnable" type="submit" color="light" (click)="guardarUsuario()" expand="block" >Actualizar datos</ion-button>
+        <ion-button  [disabled]="!botonEnable" type="submit" color="primary" (click)="guardarUsuario()" expand="block" >Actualizar datos</ion-button>
       </ion-col>
     </ion-row>
   </form>

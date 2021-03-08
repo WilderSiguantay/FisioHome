@@ -25,7 +25,7 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
-    , canActivate:[AuthGuard]
+    , canActivate: [AuthGuard]
   },
   {
     path: 'verify-email',
@@ -42,28 +42,33 @@ const routes: Routes = [
   {
     path: 'date',
     loadChildren: () => import('./date/date.module').then( m => m.DatePageModule)
+    , canActivate: [AuthGuard]
   },
   {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    , canActivate: [AuthGuard]
   },
   {
-    path: 'set-cita',component:SetCitasComponent
+    path: 'set-cita', component: SetCitasComponent
   },
   {
     path: 'addresses',
     loadChildren: () => import('./addresses/addresses.module').then( m => m.AddressesPageModule)
+    , canActivate: [AuthGuard]
   },
   {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    , canActivate: [AuthGuard]
   },
   {
     path: 'my-dates',
     loadChildren: () => import('./my-dates/my-dates.module').then( m => m.MyDatesPageModule)
+    , canActivate: [AuthGuard]
   },
- 
-  
+
+
 ];
 
 @NgModule({
