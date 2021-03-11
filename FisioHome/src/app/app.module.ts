@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     BackendModule,
     AppRoutingModule,
     AngularFireAuthModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(), // sirve para que nuestra base de datos funcione en modo offline tambien.
     AngularFireModule.initializeApp(environment.firebaseConfig),
     IonicModule,
     CommonModule,
@@ -35,6 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     AngularFireStorageModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     StatusBar,
