@@ -21,5 +21,9 @@
       "GOOGLE_MAPS_ANDROID_API_KEY": "oVdDJWHMZCcvvBar72IdAy",
       "AndroidXEnabled": "true"
     }
+  },
+  "server": {
+    "url": "http://192.168.31.9:8100",
+    "cleartext": true
   }
 }

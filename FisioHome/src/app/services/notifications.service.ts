@@ -32,8 +32,17 @@ export class NotificationsService {
               public firestoreService: FirestoreService,
               private router: Router,
               private http: HttpClient) {
-                 this.inicializar();
+                 this.stateUser();
                }
+
+  stateUser(){
+    this.firebaseauthService.stateAuth().subscribe( res => {
+      console.log(res);
+      if (res !== null){
+        this.inicializar();
+      }
+    })
+  }
 
   inicializar(){
     if (this.platform.is('capacitor')){
@@ -103,7 +112,16 @@ export class NotificationsService {
 
 
   async guardarToken(token: any){
-
+    const Uid = await this.firebaseauthService.getUid();
+    if(Uid){
+      console.log('guardar Token Firebase ->', Uid);
+      const path = '/users/';
+      const userUpdate = {
+        token: token,
+      }
+      this.firestoreService.updateDoc(path,Uid,userUpdate);
+      console.log('Guardar TokenFirebase()->', userUpdate,path,Uid);
+    }
   }
 
 
